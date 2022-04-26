@@ -5,6 +5,7 @@ part 'money_state.freezed.dart';
 @freezed
 class MoneyState with _$MoneyState {
   const factory MoneyState({
+    required String date,
     required int yen_10000,
     required int yen_5000,
     required int yen_2000,

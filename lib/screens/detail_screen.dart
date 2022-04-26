@@ -20,6 +20,7 @@ import '../utility/utility.dart';
 
 import 'components/money_display_cell.dart';
 
+import 'money_display_screen.dart';
 import 'stock_display_screen.dart';
 import 'gold_display_screen.dart';
 
@@ -94,6 +95,20 @@ class DetailScreen extends ConsumerWidget {
                     ),
                     Row(
                       children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pinkAccent.withOpacity(0.3),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: _context,
+                              builder: (_) {
+                                return MoneyDisplayScreen();
+                              },
+                            );
+                          },
+                          child: const Text('Detail'),
+                        ),
                         Text(
                           _utility
                               .makeCurrencyDisplay(moneyState.total.toString()),
@@ -115,7 +130,7 @@ class DetailScreen extends ConsumerWidget {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height - 100,
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Expanded(
                     child: ListView(
                       children: [

@@ -19,7 +19,8 @@ class _$MoneyStateTearOff {
   const _$MoneyStateTearOff();
 
   _MoneyState call(
-      {required int yen_10000,
+      {required String date,
+      required int yen_10000,
       required int yen_5000,
       required int yen_2000,
       required int yen_1000,
@@ -41,6 +42,7 @@ class _$MoneyStateTearOff {
       required int peyE,
       required int total}) {
     return _MoneyState(
+      date: date,
       yen_10000: yen_10000,
       yen_5000: yen_5000,
       yen_2000: yen_2000,
@@ -71,6 +73,7 @@ const $MoneyState = _$MoneyStateTearOff();
 
 /// @nodoc
 mixin _$MoneyState {
+  String get date => throw _privateConstructorUsedError;
   int get yen_10000 => throw _privateConstructorUsedError;
   int get yen_5000 => throw _privateConstructorUsedError;
   int get yen_2000 => throw _privateConstructorUsedError;
@@ -104,7 +107,8 @@ abstract class $MoneyStateCopyWith<$Res> {
           MoneyState value, $Res Function(MoneyState) then) =
       _$MoneyStateCopyWithImpl<$Res>;
   $Res call(
-      {int yen_10000,
+      {String date,
+      int yen_10000,
       int yen_5000,
       int yen_2000,
       int yen_1000,
@@ -137,6 +141,7 @@ class _$MoneyStateCopyWithImpl<$Res> implements $MoneyStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? date = freezed,
     Object? yen_10000 = freezed,
     Object? yen_5000 = freezed,
     Object? yen_2000 = freezed,
@@ -160,6 +165,10 @@ class _$MoneyStateCopyWithImpl<$Res> implements $MoneyStateCopyWith<$Res> {
     Object? total = freezed,
   }) {
     return _then(_value.copyWith(
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
       yen_10000: yen_10000 == freezed
           ? _value.yen_10000
           : yen_10000 // ignore: cast_nullable_to_non_nullable
@@ -255,7 +264,8 @@ abstract class _$MoneyStateCopyWith<$Res> implements $MoneyStateCopyWith<$Res> {
       __$MoneyStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int yen_10000,
+      {String date,
+      int yen_10000,
       int yen_5000,
       int yen_2000,
       int yen_1000,
@@ -290,6 +300,7 @@ class __$MoneyStateCopyWithImpl<$Res> extends _$MoneyStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? date = freezed,
     Object? yen_10000 = freezed,
     Object? yen_5000 = freezed,
     Object? yen_2000 = freezed,
@@ -313,6 +324,10 @@ class __$MoneyStateCopyWithImpl<$Res> extends _$MoneyStateCopyWithImpl<$Res>
     Object? total = freezed,
   }) {
     return _then(_MoneyState(
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
       yen_10000: yen_10000 == freezed
           ? _value.yen_10000
           : yen_10000 // ignore: cast_nullable_to_non_nullable
@@ -405,7 +420,8 @@ class __$MoneyStateCopyWithImpl<$Res> extends _$MoneyStateCopyWithImpl<$Res>
 
 class _$_MoneyState implements _MoneyState {
   const _$_MoneyState(
-      {required this.yen_10000,
+      {required this.date,
+      required this.yen_10000,
       required this.yen_5000,
       required this.yen_2000,
       required this.yen_1000,
@@ -427,6 +443,8 @@ class _$_MoneyState implements _MoneyState {
       required this.peyE,
       required this.total});
 
+  @override
+  final String date;
   @override
   final int yen_10000;
   @override
@@ -472,7 +490,7 @@ class _$_MoneyState implements _MoneyState {
 
   @override
   String toString() {
-    return 'MoneyState(yen_10000: $yen_10000, yen_5000: $yen_5000, yen_2000: $yen_2000, yen_1000: $yen_1000, yen_500: $yen_500, yen_100: $yen_100, yen_50: $yen_50, yen_10: $yen_10, yen_5: $yen_5, yen_1: $yen_1, bankA: $bankA, bankB: $bankB, bankC: $bankC, bankD: $bankD, bankE: $bankE, peyA: $peyA, peyB: $peyB, peyC: $peyC, peyD: $peyD, peyE: $peyE, total: $total)';
+    return 'MoneyState(date: $date, yen_10000: $yen_10000, yen_5000: $yen_5000, yen_2000: $yen_2000, yen_1000: $yen_1000, yen_500: $yen_500, yen_100: $yen_100, yen_50: $yen_50, yen_10: $yen_10, yen_5: $yen_5, yen_1: $yen_1, bankA: $bankA, bankB: $bankB, bankC: $bankC, bankD: $bankD, bankE: $bankE, peyA: $peyA, peyB: $peyB, peyC: $peyC, peyD: $peyD, peyE: $peyE, total: $total)';
   }
 
   @override
@@ -480,6 +498,7 @@ class _$_MoneyState implements _MoneyState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MoneyState &&
+            const DeepCollectionEquality().equals(other.date, date) &&
             const DeepCollectionEquality().equals(other.yen_10000, yen_10000) &&
             const DeepCollectionEquality().equals(other.yen_5000, yen_5000) &&
             const DeepCollectionEquality().equals(other.yen_2000, yen_2000) &&
@@ -506,6 +525,7 @@ class _$_MoneyState implements _MoneyState {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        const DeepCollectionEquality().hash(date),
         const DeepCollectionEquality().hash(yen_10000),
         const DeepCollectionEquality().hash(yen_5000),
         const DeepCollectionEquality().hash(yen_2000),
@@ -537,7 +557,8 @@ class _$_MoneyState implements _MoneyState {
 
 abstract class _MoneyState implements MoneyState {
   const factory _MoneyState(
-      {required int yen_10000,
+      {required String date,
+      required int yen_10000,
       required int yen_5000,
       required int yen_2000,
       required int yen_1000,
@@ -559,6 +580,8 @@ abstract class _MoneyState implements MoneyState {
       required int peyE,
       required int total}) = _$_MoneyState;
 
+  @override
+  String get date;
   @override
   int get yen_10000;
   @override
