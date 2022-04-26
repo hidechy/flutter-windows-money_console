@@ -2,21 +2,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/gold.dart';
-import 'package:money_console/models/shintaku.dart';
-import 'package:money_console/models/stock.dart';
-import 'package:money_console/screens/gold_display_screen.dart';
-import 'package:money_console/state/money_state.dart';
-import 'package:money_console/viewmodels/gold_view_model.dart';
-import 'package:money_console/viewmodels/shintaku_view_model.dart';
-import 'package:money_console/viewmodels/stock_view_model.dart';
+
+import '../models/gold.dart';
+import '../models/stock.dart';
+import '../models/shintaku.dart';
 
 import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/money_view_model.dart';
+import '../viewmodels/gold_view_model.dart';
+import '../viewmodels/stock_view_model.dart';
+import '../viewmodels/shintaku_view_model.dart';
+
+import '../state/money_state.dart';
 
 import '../utility/utility.dart';
 
 import 'components/money_display_cell.dart';
+
+import 'stock_display_screen.dart';
+import 'gold_display_screen.dart';
 
 class DetailScreen extends ConsumerWidget {
   DetailScreen({Key? key}) : super(key: key);
@@ -398,7 +402,25 @@ class DetailScreen extends ConsumerWidget {
 
       _list.add(
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: _context,
+                  builder: (_) {
+                    return StockDisplayScreen(
+                      record: todayStock[i],
+                    );
+                  },
+                );
+              },
+              child: const Text('Detail'),
+            ),
+            const SizedBox(width: 20),
             MoneyDisplayCell(
               type: 'Date',
               price: exDate[0],

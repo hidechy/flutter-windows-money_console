@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/gold.dart';
+
+import '../models/gold.dart';
 
 import '../viewmodels/gold_view_model.dart';
 
