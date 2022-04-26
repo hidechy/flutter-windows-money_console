@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:money_console/screens/shintaku_display_screen.dart';
 
 import '../models/gold.dart';
 import '../models/stock.dart';
@@ -113,6 +114,7 @@ class DetailScreen extends ConsumerWidget {
                 if (todayGold != null) dispGold(todayGold),
                 if (todayStock != null) dispStock(todayStock),
                 if (todayShintaku != null) dispShintaku(todayShintaku),
+                const SizedBox(height: 100),
               ],
             ),
           ),
@@ -481,7 +483,25 @@ class DetailScreen extends ConsumerWidget {
 
       _list.add(
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: _context,
+                  builder: (_) {
+                    return ShintakuDisplayScreen(
+                      record: todayShintaku[i],
+                    );
+                  },
+                );
+              },
+              child: const Text('Detail'),
+            ),
+            const SizedBox(width: 20),
             MoneyDisplayCell(
               type: 'Date',
               price: exDate[0],
@@ -495,7 +515,7 @@ class DetailScreen extends ConsumerWidget {
               flex: 5,
             ),
             MoneyDisplayCell(
-              type: 'ShintakuValue',
+              type: 'Value',
               price: todayShintaku[i].price,
               colorFlag: 1,
               flex: 1,

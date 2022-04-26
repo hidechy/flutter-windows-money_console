@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:money_console/models/shintaku.dart';
 
-import '../models/stock.dart';
+class ShintakuDisplayScreen extends StatelessWidget {
+  const ShintakuDisplayScreen({Key? key, required this.record})
+      : super(key: key);
 
-class StockDisplayScreen extends StatelessWidget {
-  const StockDisplayScreen({Key? key, required this.record}) : super(key: key);
-
-  final StockRecord record;
+  final ShintakuRecord record;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class StockDisplayScreen extends StatelessWidget {
                   Container(
                     width: 100,
                     alignment: Alignment.topRight,
-                    child: Text(record.oneStock),
+                    child: Text(record.shutoku),
                   ),
                   Container(
                     width: 100,
@@ -68,7 +68,7 @@ class StockDisplayScreen extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, int position) {
-                  return dispStockRecord(record: exData[position]);
+                  return dispShintakuRecord(record: exData[position]);
                 },
                 separatorBuilder: (_, __) {
                   return Divider(color: Colors.white.withOpacity(0.3));
@@ -83,7 +83,7 @@ class StockDisplayScreen extends StatelessWidget {
   }
 
   ///
-  Widget dispStockRecord({required String record}) {
+  Widget dispShintakuRecord({required String record}) {
     final exRecord = record.split('|');
 
     return Row(
