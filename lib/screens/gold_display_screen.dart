@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/gold.dart';
 
 import '../viewmodels/gold_view_model.dart';
+import '../viewmodels/holiday_view_model.dart';
 
 import '../utility/utility.dart';
-import '../viewmodels/holiday_view_model.dart';
 
 class GoldDisplayScreen extends ConsumerWidget {
   GoldDisplayScreen({Key? key}) : super(key: key);
@@ -33,6 +34,7 @@ class GoldDisplayScreen extends ConsumerWidget {
         ),
         child: Column(
           children: [
+            makeGraph(data: goldState),
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, int position) {
@@ -116,4 +118,60 @@ class GoldDisplayScreen extends ConsumerWidget {
       ),
     );
   }
+
+  ///
+  makeGraph({required List<GoldData> data}) {
+    List<ChartData> _list = [];
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].goldValue == "-") {
+        continue;
+      }
+
+      _list.add(
+        ChartData(
+          x: DateTime(
+            int.parse(data[i].year),
+            int.parse(data[i].month),
+            int.parse(data[i].day),
+          ),
+          goldValue: data[i].goldValue,
+          payPrice: data[i].payPrice,
+        ),
+      );
+    }
+
+    return SfCartesianChart(
+      series: <ChartSeries>[
+        LineSeries<ChartData, DateTime>(
+          color: Colors.yellowAccent,
+          dataSource: _list,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.goldValue,
+        ),
+        LineSeries<ChartData, DateTime>(
+          color: Colors.orangeAccent,
+          dataSource: _list,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.payPrice,
+        ),
+      ],
+      primaryXAxis: DateTimeAxis(
+        majorGridLines: const MajorGridLines(width: 0),
+      ),
+      primaryYAxis: NumericAxis(
+        majorGridLines: const MajorGridLines(
+          width: 2,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class ChartData {
+  final DateTime x;
+  final num goldValue;
+  final num payPrice;
+
+  ChartData({required this.x, required this.goldValue, required this.payPrice});
 }

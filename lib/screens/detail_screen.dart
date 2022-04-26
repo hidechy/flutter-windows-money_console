@@ -112,14 +112,23 @@ class DetailScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const Divider(),
-                dispCurrency(moneyState),
-                dispBank(moneyState),
-                dispEMoney(moneyState),
-                if (todayGold != null) dispGold(todayGold),
-                if (todayStock != null) dispStock(todayStock),
-                if (todayShintaku != null) dispShintaku(todayShintaku),
-                const SizedBox(height: 50),
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height - 100,
+                  padding: EdgeInsets.all(20),
+                  child: Expanded(
+                    child: ListView(
+                      children: [
+                        dispCurrency(moneyState),
+                        dispBank(moneyState),
+                        dispEMoney(moneyState),
+                        if (todayGold != null) dispGold(todayGold),
+                        if (todayStock != null) dispStock(todayStock),
+                        if (todayShintaku != null) dispShintaku(todayShintaku),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -231,6 +240,7 @@ class DetailScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(),
         const Text(
           'Currency',
           style: TextStyle(fontSize: 20),

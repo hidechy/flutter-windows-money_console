@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:money_console/models/shintaku.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../utility/utility.dart';
 import '../viewmodels/holiday_view_model.dart';
@@ -32,6 +33,7 @@ class ShintakuDisplayScreen extends ConsumerWidget {
         ),
         child: Column(
           children: [
+            makeGraph(data: record.data),
             Container(
               decoration: BoxDecoration(
                 color: Colors.yellowAccent.withOpacity(0.3),
@@ -133,4 +135,66 @@ class ShintakuDisplayScreen extends ConsumerWidget {
       ),
     );
   }
+
+  ///
+  makeGraph({required String data}) {
+    List<ChartData> _list = [];
+
+    var exData = (data).split('/');
+    for (var i = 0; i < exData.length; i++) {
+      var exValue = (exData[i]).split('|');
+
+      if (exValue[5] == "-") {
+        continue;
+      }
+
+      _utility.makeYMDYData(exValue[0]);
+
+      _list.add(
+        ChartData(
+          x: DateTime(
+            int.parse(_utility.year),
+            int.parse(_utility.month),
+            int.parse(_utility.day),
+          ),
+          val: int.parse(exValue[4].replaceAll(',', '')),
+          pay: int.parse(exValue[3].replaceAll(',', '')),
+        ),
+      );
+    }
+
+    return SfCartesianChart(
+      series: <ChartSeries>[
+        LineSeries<ChartData, DateTime>(
+          color: Colors.yellowAccent,
+          dataSource: _list,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.val,
+        ),
+        LineSeries<ChartData, DateTime>(
+          color: Colors.orangeAccent,
+          dataSource: _list,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.pay,
+        ),
+      ],
+      primaryXAxis: DateTimeAxis(
+        majorGridLines: const MajorGridLines(width: 0),
+      ),
+      primaryYAxis: NumericAxis(
+        majorGridLines: const MajorGridLines(
+          width: 2,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class ChartData {
+  final DateTime x;
+  final num val;
+  final num pay;
+
+  ChartData({required this.x, required this.val, required this.pay});
 }
