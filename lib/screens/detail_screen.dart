@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:money_console/models/gold.dart';
 import 'package:money_console/models/shintaku.dart';
 import 'package:money_console/models/stock.dart';
+import 'package:money_console/screens/gold_display_screen.dart';
 import 'package:money_console/state/money_state.dart';
 import 'package:money_console/viewmodels/gold_view_model.dart';
 import 'package:money_console/viewmodels/shintaku_view_model.dart';
@@ -12,8 +13,6 @@ import 'package:money_console/viewmodels/stock_view_model.dart';
 
 import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/money_view_model.dart';
-
-import 'temp_screen.dart';
 
 import '../utility/utility.dart';
 
@@ -24,8 +23,12 @@ class DetailScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  late BuildContext _context;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _context = context;
+
     var calendarSelectDateState = ref.watch(calendarSelectDateProvider);
 
     if (calendarSelectDateState == "") {
@@ -100,32 +103,11 @@ class DetailScreen extends ConsumerWidget {
                   ],
                 ),
                 const Divider(),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     showAboutDialog(
-                //       context: context,
-                //       applicationIcon: const FlutterLogo(),
-                //       applicationName: 'bbbbbbbb',
-                //       applicationLegalese: "\u{a9} 2022 Hidechy.",
-                //       children: [
-                //         const TempScreen(),
-                //       ],
-                //     );
-                //   },
-                //   child: const Text('aaa'),
-                // ),
-                // const Divider(),
-
                 dispCurrency(moneyState),
-
                 dispBank(moneyState),
-
                 dispEMoney(moneyState),
-
                 if (todayGold != null) dispGold(todayGold),
-
                 if (todayStock != null) dispStock(todayStock),
-
                 if (todayShintaku != null) dispShintaku(todayShintaku),
               ],
             ),
@@ -335,7 +317,23 @@ class DetailScreen extends ConsumerWidget {
         const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: _context,
+                  builder: (_) {
+                    return const GoldDisplayScreen();
+                  },
+                );
+              },
+              child: const Text('Detail'),
+            ),
+            const SizedBox(width: 20),
             MoneyDisplayCell(
               type: 'PayPrice',
               price: todayGold.payPrice.toString(),
@@ -512,4 +510,7 @@ class DetailScreen extends ConsumerWidget {
       ],
     );
   }
+
+  /////////////////////////////////////////////////////////
+
 }
