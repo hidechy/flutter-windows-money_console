@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Utility {
@@ -64,5 +65,82 @@ class Utility {
     bankNames['payC'] = 'PASUMO';
     bankNames['payD'] = 'Suica2';
     bankNames['payE'] = 'メルカリ';
+  }
+
+  /// 日付データ作成
+  late String year;
+  late String month;
+  late String day;
+  late String youbi;
+  late String youbiStr;
+  late int youbiNo;
+
+  void makeYMDYData(String date) {
+    List explodedDate = date.split(' ');
+    List explodedSelectedDate = explodedDate[0].split('-');
+    year = explodedSelectedDate[0];
+    month = explodedSelectedDate[1];
+    day = explodedSelectedDate[2];
+
+    DateTime youbiDate =
+        DateTime(int.parse(year), int.parse(month), int.parse(day));
+    youbi = DateFormat('EEEE').format(youbiDate);
+    switch (youbi) {
+      case "Sunday":
+        youbiStr = "日";
+        youbiNo = 0;
+        break;
+      case "Monday":
+        youbiStr = "月";
+        youbiNo = 1;
+        break;
+      case "Tuesday":
+        youbiStr = "火";
+        youbiNo = 2;
+        break;
+      case "Wednesday":
+        youbiStr = "水";
+        youbiNo = 3;
+        break;
+      case "Thursday":
+        youbiStr = "木";
+        youbiNo = 4;
+        break;
+      case "Friday":
+        youbiStr = "金";
+        youbiNo = 5;
+        break;
+      case "Saturday":
+        youbiStr = "土";
+        youbiNo = 6;
+        break;
+    }
+  }
+
+  /// 背景色取得
+  Color getBgColor(String date, List _holidayList) {
+    makeYMDYData(date);
+
+    Color? _color;
+
+    switch (youbiNo) {
+      case 0:
+        _color = Colors.redAccent[700]!.withOpacity(0.3);
+        break;
+
+      case 6:
+        _color = Colors.blueAccent[700]!.withOpacity(0.3);
+        break;
+
+      default:
+        _color = Colors.black.withOpacity(0.3);
+        break;
+    }
+
+    if (_holidayList.contains(date)) {
+      _color = Colors.greenAccent[700]!.withOpacity(0.3);
+    }
+
+    return _color;
   }
 }

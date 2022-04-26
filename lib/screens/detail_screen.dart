@@ -40,6 +40,11 @@ class DetailScreen extends ConsumerWidget {
       calendarSelectDateState = DateTime.now().toString();
     }
 
+    //-----------------------------------------
+    _utility.makeYMDYData(calendarSelectDateState);
+    final youbiStr = _utility.youbiStr;
+    //-----------------------------------------
+
     final exDate = calendarSelectDateState.split(' ');
 
     final moneyState = ref.watch(moneyProvider(exDate[0]));
@@ -84,7 +89,7 @@ class DetailScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      exDate[0],
+                      '${exDate[0]}（$youbiStr）',
                       style: const TextStyle(fontSize: 30),
                     ),
                     Row(
@@ -114,7 +119,7 @@ class DetailScreen extends ConsumerWidget {
                 if (todayGold != null) dispGold(todayGold),
                 if (todayStock != null) dispStock(todayStock),
                 if (todayShintaku != null) dispShintaku(todayShintaku),
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
               ],
             ),
           ),
@@ -333,7 +338,7 @@ class DetailScreen extends ConsumerWidget {
                 showDialog(
                   context: _context,
                   builder: (_) {
-                    return const GoldDisplayScreen();
+                    return GoldDisplayScreen();
                   },
                 );
               },

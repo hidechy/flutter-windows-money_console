@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
+import 'package:flutter_calendar_carousel/classes/event_list.dart';
 
+import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
 
 class CalendarScreen extends ConsumerWidget {
@@ -16,9 +18,15 @@ class CalendarScreen extends ConsumerWidget {
 
   DateTime _currentDate = DateTime.now();
 
+  final EventList<Event> _markedDateMap = EventList(events: {});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _ref = ref;
+
+    final holidayState = ref.watch(holidayProvider);
+
+    Future(() => makeHolidayMap(holiday: holidayState));
 
     final calendarSelectDateState = ref.watch(calendarSelectDateProvider);
 
@@ -39,36 +47,26 @@ class CalendarScreen extends ConsumerWidget {
               height: 400,
               child: CalendarCarousel<Event>(
                 minSelectedDate: DateTime(2020, 1, 1),
-
-//                markedDatesMap: _markedDateMap,
-
+                markedDatesMap: _markedDateMap,
                 locale: 'JA',
-
                 todayBorderColor: Colors.orangeAccent.withOpacity(0.8),
                 todayButtonColor: Colors.orangeAccent.withOpacity(0.1),
-
                 selectedDayButtonColor: Colors.greenAccent.withOpacity(0.1),
-
                 thisMonthDayBorderColor: Colors.grey,
-
                 weekendTextStyle:
                     const TextStyle(fontSize: 16.0, color: Colors.red),
                 weekdayTextStyle: const TextStyle(color: Colors.grey),
                 dayButtonColor: Colors.black.withOpacity(0.3),
-
+                onDayPressed: onDayPressed,
                 weekFormat: false,
+                selectedDateTime: _currentDate,
                 daysHaveCircularBorder: false,
                 customGridViewPhysics: const NeverScrollableScrollPhysics(),
                 daysTextStyle:
                     const TextStyle(fontSize: 16.0, color: Colors.white),
                 todayTextStyle:
                     const TextStyle(fontSize: 16.0, color: Colors.white),
-
                 headerTextStyle: const TextStyle(fontSize: 18.0),
-
-                onDayPressed: onDayPressed,
-
-                selectedDateTime: _currentDate,
               ),
             ),
           ],
@@ -82,5 +80,21 @@ class CalendarScreen extends ConsumerWidget {
     final calendarSelectDateViewModel =
         _ref.watch(calendarSelectDateProvider.notifier);
     calendarSelectDateViewModel.setCalendarSelectDate(date: date.toString());
+  }
+
+  ///
+  void makeHolidayMap({required List holiday}) {
+    holiday.map((holi) {
+      var exHoli = holi.toString().split('-');
+      _markedDateMap.add(
+        DateTime(
+            int.parse(exHoli[0]), int.parse(exHoli[1]), int.parse(exHoli[2])),
+        Event(
+          date: DateTime(
+              int.parse(exHoli[0]), int.parse(exHoli[1]), int.parse(exHoli[2])),
+          icon: const Icon(Icons.flag),
+        ),
+      );
+    });
   }
 }
