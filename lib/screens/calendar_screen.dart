@@ -11,6 +11,8 @@ import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
 
+import 'month_list_display_screen.dart';
+
 class CalendarScreen extends ConsumerWidget {
   CalendarScreen({Key? key}) : super(key: key);
 
@@ -41,6 +43,7 @@ class CalendarScreen extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: double.infinity,
@@ -67,7 +70,23 @@ class CalendarScreen extends ConsumerWidget {
                 todayTextStyle:
                     const TextStyle(fontSize: 16.0, color: Colors.white),
                 headerTextStyle: const TextStyle(fontSize: 18.0),
+                onCalendarChanged: onCalendarChanged,
               ),
+            ),
+            const Divider(),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return MonthListDisplayScreen();
+                  },
+                );
+              },
+              child: const Text('Month List'),
             ),
           ],
         ),
@@ -77,6 +96,13 @@ class CalendarScreen extends ConsumerWidget {
 
   ///
   onDayPressed(DateTime date, List<Event> events) {
+    final calendarSelectDateViewModel =
+        _ref.watch(calendarSelectDateProvider.notifier);
+    calendarSelectDateViewModel.setCalendarSelectDate(date: date.toString());
+  }
+
+  ///
+  void onCalendarChanged(DateTime date) async {
     final calendarSelectDateViewModel =
         _ref.watch(calendarSelectDateProvider.notifier);
     calendarSelectDateViewModel.setCalendarSelectDate(date: date.toString());

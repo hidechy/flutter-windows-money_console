@@ -104,32 +104,36 @@ class ShintakuDisplayScreen extends ConsumerWidget {
       color: _utility.getBgColor(exRecord[0], holiday),
       child: Row(
         children: [
-          Text('${exRecord[0]}（${_utility.youbiStr}）'),
-          const SizedBox(width: 50),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(exRecord[1]),
+          Expanded(child: Text('${exRecord[0]}（${_utility.youbiStr}）')),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(exRecord[1]),
+            ),
           ),
-          Container(
-            width: 100,
-            alignment: Alignment.topRight,
-            child: Text(exRecord[2]),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(exRecord[2]),
+            ),
           ),
-          Container(
-            width: 100,
-            alignment: Alignment.topRight,
-            child: Text(exRecord[3]),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(exRecord[3]),
+            ),
           ),
-          Container(
-            width: 100,
-            alignment: Alignment.topRight,
-            child: Text(exRecord[4]),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(exRecord[4]),
+            ),
           ),
-          Container(
-            width: 100,
-            alignment: Alignment.topRight,
-            child: Text(exRecord[5]),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(exRecord[5]),
+            ),
           ),
         ],
       ),

@@ -63,14 +63,12 @@ class MoneyDisplayScreen extends ConsumerWidget {
       color: _utility.getBgColor(money.date, holiday),
       child: Row(
         children: [
-          SizedBox(
-            width: 150,
-            child: Text('${money.date}（${_utility.youbiStr}）'),
-          ),
-          Container(
-            width: 100,
-            alignment: Alignment.topRight,
-            child: Text(_utility.makeCurrencyDisplay(money.total.toString())),
+          Expanded(child: Text('${money.date}（${_utility.youbiStr}）')),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(_utility.makeCurrencyDisplay(money.total.toString())),
+            ),
           ),
         ],
       ),

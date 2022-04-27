@@ -65,54 +65,62 @@ class GoldDisplayScreen extends ConsumerWidget {
       color: _utility.getBgColor(date, holiday),
       child: Row(
         children: [
-          Text('$date（${_utility.youbiStr}）'),
-          const SizedBox(width: 50),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(gold.payPrice.toString()),
+          Expanded(child: Text('$date（${_utility.youbiStr}）')),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.payPrice.toString()),
+            ),
           ),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(gold.goldValue.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.goldValue.toString()),
+            ),
           ),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text((gold.goldValue == '-')
-                ? '-'
-                : (gold.goldValue - gold.payPrice).toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text((gold.goldValue == '-')
+                  ? '-'
+                  : (gold.goldValue - gold.payPrice).toString()),
+            ),
           ),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(gold.goldTanka.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.goldTanka.toString()),
+            ),
           ),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(gold.diff.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.diff.toString()),
+            ),
           ),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(gold.upDown.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.upDown.toString()),
+            ),
           ),
-          Container(
-            width: 80,
-            alignment: Alignment.topRight,
-            child: Text(gold.goldPrice.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.goldPrice.toString()),
+            ),
           ),
-          Container(
-            width: 120,
-            alignment: Alignment.topRight,
-            child: Text(gold.gramNum.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.gramNum.toString()),
+            ),
           ),
-          Container(
-            width: 120,
-            alignment: Alignment.topRight,
-            child: Text(gold.totalGram.toString()),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(gold.totalGram.toString()),
+            ),
           ),
         ],
       ),
