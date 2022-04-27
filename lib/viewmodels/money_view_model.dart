@@ -57,35 +57,39 @@ class MoneyStateNotifier extends StateNotifier<MoneyState> {
 
     ///////////////////////////////////////////////
     Utility _utility = Utility();
-    _utility.makeTotal(money['data'], 'one');
+
+    if (money['data'] != "-") {
+      _utility.makeTotal(money['data'], 'one');
+
+      var exMoney = (money['data']).split('|');
+
+      state = state.copyWith(
+        date: date,
+        yen_10000: int.parse(exMoney[0]),
+        yen_5000: int.parse(exMoney[1]),
+        yen_2000: int.parse(exMoney[2]),
+        yen_1000: int.parse(exMoney[3]),
+        yen_500: int.parse(exMoney[4]),
+        yen_100: int.parse(exMoney[5]),
+        yen_50: int.parse(exMoney[6]),
+        yen_10: int.parse(exMoney[7]),
+        yen_5: int.parse(exMoney[8]),
+        yen_1: int.parse(exMoney[9]),
+        bankA: int.parse(exMoney[10]),
+        bankB: int.parse(exMoney[11]),
+        bankC: int.parse(exMoney[12]),
+        bankD: int.parse(exMoney[13]),
+        bankE: int.parse(exMoney[14]),
+        peyA: int.parse(exMoney[15]),
+        peyB: int.parse(exMoney[16]),
+        peyC: int.parse(exMoney[17]),
+        peyD: int.parse(exMoney[18]),
+        peyE: int.parse(exMoney[19]),
+        total: _utility.total,
+      );
+    }
+
     ///////////////////////////////////////////////
-
-    var exMoney = (money['data']).split('|');
-
-    state = state.copyWith(
-      date: date,
-      yen_10000: int.parse(exMoney[0]),
-      yen_5000: int.parse(exMoney[1]),
-      yen_2000: int.parse(exMoney[2]),
-      yen_1000: int.parse(exMoney[3]),
-      yen_500: int.parse(exMoney[4]),
-      yen_100: int.parse(exMoney[5]),
-      yen_50: int.parse(exMoney[6]),
-      yen_10: int.parse(exMoney[7]),
-      yen_5: int.parse(exMoney[8]),
-      yen_1: int.parse(exMoney[9]),
-      bankA: int.parse(exMoney[10]),
-      bankB: int.parse(exMoney[11]),
-      bankC: int.parse(exMoney[12]),
-      bankD: int.parse(exMoney[13]),
-      bankE: int.parse(exMoney[14]),
-      peyA: int.parse(exMoney[15]),
-      peyB: int.parse(exMoney[16]),
-      peyC: int.parse(exMoney[17]),
-      peyD: int.parse(exMoney[18]),
-      peyE: int.parse(exMoney[19]),
-      total: _utility.total,
-    );
   }
 }
 

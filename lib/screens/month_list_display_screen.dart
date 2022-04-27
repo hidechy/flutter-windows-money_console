@@ -33,6 +33,13 @@ class MonthListDisplayScreen extends ConsumerWidget {
       monthMoney = getMonthMoney(ym: ym, data: allMoneyState);
     }
 
+    var lastMonthEnd =
+        DateTime(int.parse(_utility.year), int.parse(_utility.month), 0);
+    var exLastMonthEnd = lastMonthEnd.toString().split(' ');
+
+    final mo = ref.watch(moneyProvider(exLastMonthEnd[0]));
+    final kurikoshi = mo.total;
+
     return AlertDialog(
       backgroundColor: Colors.transparent,
       content: Container(
@@ -60,9 +67,18 @@ class MonthListDisplayScreen extends ConsumerWidget {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, int position) {
+                  int spend = 0;
+                  if (position == 0) {
+                    spend = kurikoshi - monthMoney[position].total;
+                  } else {
+                    spend = monthMoney[position - 1].total -
+                        monthMoney[position].total;
+                  }
+
                   return dispMonthMoneyRecord(
                     money: monthMoney[position],
                     holiday: holidayState,
+                    spend: spend,
                   );
                 },
                 separatorBuilder: (_, __) {
@@ -93,175 +109,200 @@ class MonthListDisplayScreen extends ConsumerWidget {
 
   ///
   Widget dispMonthMoneyRecord(
-      {required MoneyState money, required List holiday}) {
+      {required MoneyState money, required List holiday, required int spend}) {
     return Container(
       width: double.infinity,
       color: _utility.getBgColor(money.date, holiday),
-      child: Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${money.date}（${_utility.youbiStr}）'),
-              Text(_utility.makeCurrencyDisplay(money.total.toString())),
-            ],
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('${money.date}（${_utility.youbiStr}）'),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          _utility.makeCurrencyDisplay(money.total.toString()),
+                        ),
+                        Text(
+                          _utility.makeCurrencyDisplay(spend.toString()),
+                          style: const TextStyle(color: Colors.yellowAccent),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const Divider(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_10000.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_5000.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_2000.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_1000.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_500.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_100.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_50.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_10.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_5.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(money.yen_1.toString()),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.bankA.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.bankB.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.bankC.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.bankD.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.bankE.toString())),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.peyA.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.peyB.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.peyC.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.peyD.toString())),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(_utility.makeCurrencyDisplay(
+                                      money.peyE.toString())),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          const Divider(),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_10000.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_5000.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_2000.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_1000.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_500.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_100.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_50.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_10.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_5.toString()),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text(money.yen_1.toString()),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.bankA.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.bankB.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.bankC.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.bankD.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.bankE.toString())),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.peyA.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.peyB.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.peyC.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.peyD.toString())),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: Text(_utility
-                                .makeCurrencyDisplay(money.peyE.toString())),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          const SizedBox(width: 20),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.pinkAccent.withOpacity(0.3),
+            ),
+            onPressed: () {},
+            child: const Text('Detail'),
           ),
         ],
       ),
