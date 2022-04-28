@@ -14,6 +14,8 @@ class GoldDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goldState = ref.watch(goldProvider);
@@ -22,7 +24,6 @@ class GoldDisplayScreen extends ConsumerWidget {
 
     return AlertDialog(
       backgroundColor: Colors.transparent,
-      title: const Text('Gold'),
       content: Container(
         width: MediaQuery.of(context).size.width - 200,
         height: MediaQuery.of(context).size.height - 100,
@@ -34,9 +35,19 @@ class GoldDisplayScreen extends ConsumerWidget {
         ),
         child: Column(
           children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.yellowAccent.withOpacity(0.3),
+              ),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 30),
+              width: double.infinity,
+              child: const Text('Gold'),
+            ),
             makeGraph(data: goldState),
             Expanded(
               child: ListView.separated(
+                controller: _controller,
                 itemBuilder: (context, int position) {
                   return dispGoldRecord(
                     gold: goldState[position],
@@ -65,7 +76,10 @@ class GoldDisplayScreen extends ConsumerWidget {
       color: _utility.getBgColor(date, holiday),
       child: Row(
         children: [
-          Expanded(child: Text('$date（${_utility.youbiStr}）')),
+          Expanded(
+            flex: 2,
+            child: Text('$date（${_utility.youbiStr}）'),
+          ),
           Expanded(
             child: Container(
               alignment: Alignment.topRight,
@@ -167,9 +181,9 @@ class GoldDisplayScreen extends ConsumerWidget {
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
-        majorGridLines: const MajorGridLines(
+        majorGridLines: MajorGridLines(
           width: 2,
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.3),
         ),
       ),
     );

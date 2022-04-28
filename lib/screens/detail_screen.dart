@@ -31,6 +31,8 @@ class DetailScreen extends ConsumerWidget {
 
   late BuildContext _context;
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _context = context;
@@ -50,102 +52,74 @@ class DetailScreen extends ConsumerWidget {
 
     final moneyState = ref.watch(moneyProvider(exDate[0]));
 
-    int toushiTotal = 0;
-
     final goldState = ref.watch(goldProvider);
     var todayGold = getTodayGold(date: exDate[0], data: goldState);
     if (todayGold != null) {
       if (todayGold.payPrice == '-') {
         todayGold = null;
-      } else {
-        toushiTotal += int.parse(todayGold.goldValue.toString());
       }
     }
 
     final stockState = ref.watch(stockProvider(exDate[0]));
     final todayStock = (stockState.isNotEmpty) ? stockState : null;
-    if (todayStock != null) {
-      for (var i = 0; i < todayStock.length; i++) {
-        toushiTotal += int.parse(todayStock[i].price.toString());
-      }
-    }
 
     final shintakuState = ref.watch(shintakuProvider(exDate[0]));
     final todayShintaku = (shintakuState.isNotEmpty) ? shintakuState : null;
-    if (todayShintaku != null) {
-      for (var i = 0; i < todayShintaku.length; i++) {
-        toushiTotal += int.parse(todayShintaku[i].price.toString());
-      }
-    }
 
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Padding(
+          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${exDate[0]}（$youbiStr）',
+                    style: const TextStyle(fontSize: 30),
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.pinkAccent.withOpacity(0.3),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: _context,
+                            builder: (_) {
+                              return MoneyDisplayScreen();
+                            },
+                          );
+                        },
+                        child: const Text('Detail'),
+                      ),
+                      Text(
+                        _utility
+                            .makeCurrencyDisplay(moneyState.total.toString()),
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView(
+                  controller: _controller,
                   children: [
-                    Text(
-                      '${exDate[0]}（$youbiStr）',
-                      style: const TextStyle(fontSize: 30),
-                    ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pinkAccent.withOpacity(0.3),
-                          ),
-                          onPressed: () {
-                            showDialog(
-                              context: _context,
-                              builder: (_) {
-                                return MoneyDisplayScreen();
-                              },
-                            );
-                          },
-                          child: const Text('Detail'),
-                        ),
-                        Text(
-                          _utility
-                              .makeCurrencyDisplay(moneyState.total.toString()),
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        if (toushiTotal > 0)
-                          Container(
-                            margin: const EdgeInsets.only(left: 20),
-                            child: Text(
-                              _utility
-                                  .makeCurrencyDisplay(toushiTotal.toString()),
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                      ],
-                    ),
+                    dispCurrency(moneyState),
+                    dispBank(moneyState),
+                    dispEMoney(moneyState),
+                    if (todayGold != null) dispGold(todayGold),
+                    if (todayStock != null) dispStock(todayStock),
+                    if (todayShintaku != null) dispShintaku(todayShintaku),
+                    const SizedBox(height: 100),
                   ],
                 ),
-                Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height - 100,
-                  padding: const EdgeInsets.all(20),
-                  child: Expanded(
-                    child: ListView(
-                      children: [
-                        dispCurrency(moneyState),
-                        dispBank(moneyState),
-                        dispEMoney(moneyState),
-                        if (todayGold != null) dispGold(todayGold),
-                        if (todayStock != null) dispStock(todayStock),
-                        if (todayShintaku != null) dispShintaku(todayShintaku),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -332,6 +306,7 @@ class DetailScreen extends ConsumerWidget {
   ///
   getTodayGold({required String date, required List<GoldData> data}) {
     var goldData;
+
     for (var i = 0; i < data.length; i++) {
       if (date == '${data[i].year}-${data[i].month}-${data[i].day}') {
         goldData = data[i];
@@ -371,15 +346,15 @@ class DetailScreen extends ConsumerWidget {
             ),
             const SizedBox(width: 20),
             MoneyDisplayCell(
-              type: 'PayPrice',
-              price: todayGold.payPrice.toString(),
-              colorFlag: 0,
+              type: 'Value',
+              price: todayGold.goldValue.toString(),
+              colorFlag: 1,
               flex: 1,
             ),
             MoneyDisplayCell(
-              type: 'GoldValue',
-              price: todayGold.goldValue.toString(),
-              colorFlag: 1,
+              type: 'Cost',
+              price: todayGold.payPrice.toString(),
+              colorFlag: 0,
               flex: 1,
             ),
             MoneyDisplayCell(
@@ -466,7 +441,7 @@ class DetailScreen extends ConsumerWidget {
               flex: 5,
             ),
             MoneyDisplayCell(
-              type: 'StockValue',
+              type: 'Value',
               price: todayStock[i].price,
               colorFlag: 1,
               flex: 1,
@@ -583,6 +558,5 @@ class DetailScreen extends ConsumerWidget {
     );
   }
 
-  /////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////
 }

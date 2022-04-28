@@ -14,6 +14,8 @@ class MoneyDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final allMoneyState = ref.watch(allMoneyProvider);
@@ -36,6 +38,7 @@ class MoneyDisplayScreen extends ConsumerWidget {
             makeGraph(data: allMoneyState),
             Expanded(
               child: ListView.separated(
+                controller: _controller,
                 itemBuilder: (context, int position) {
                   return dispAllMoneyRecord(
                     money: allMoneyState[position],

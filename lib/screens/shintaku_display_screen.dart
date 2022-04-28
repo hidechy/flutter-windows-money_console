@@ -13,6 +13,8 @@ class ShintakuDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final exData = record.data.split('/');
@@ -21,7 +23,6 @@ class ShintakuDisplayScreen extends ConsumerWidget {
 
     return AlertDialog(
       backgroundColor: Colors.transparent,
-      title: const Text('Stock'),
       content: Container(
         width: MediaQuery.of(context).size.width - 200,
         height: MediaQuery.of(context).size.height - 100,
@@ -33,49 +34,56 @@ class ShintakuDisplayScreen extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            makeGraph(data: record.data),
             Container(
               decoration: BoxDecoration(
                 color: Colors.yellowAccent.withOpacity(0.3),
               ),
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.only(bottom: 30),
+              width: double.infinity,
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 500,
+                  Expanded(
+                    flex: 3,
                     child: Text(record.name),
                   ),
-                  Container(
-                    width: 100,
-                    alignment: Alignment.topRight,
-                    child: Text(record.num.toString()),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text(record.num.toString()),
+                    ),
                   ),
-                  Container(
-                    width: 100,
-                    alignment: Alignment.topRight,
-                    child: Text(record.shutoku),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text(record.shutoku),
+                    ),
                   ),
-                  Container(
-                    width: 100,
-                    alignment: Alignment.topRight,
-                    child: Text(record.cost.toString()),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text(record.cost.toString()),
+                    ),
                   ),
-                  Container(
-                    width: 100,
-                    alignment: Alignment.topRight,
-                    child: Text(record.price),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text(record.price),
+                    ),
                   ),
-                  Container(
-                    width: 100,
-                    alignment: Alignment.topRight,
-                    child: Text(record.diff.toString()),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text(record.diff.toString()),
+                    ),
                   ),
                 ],
               ),
             ),
+            makeGraph(data: record.data),
             Expanded(
               child: ListView.separated(
+                controller: _controller,
                 itemBuilder: (context, int position) {
                   return dispShintakuRecord(
                     record: exData[position],
@@ -186,9 +194,9 @@ class ShintakuDisplayScreen extends ConsumerWidget {
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
-        majorGridLines: const MajorGridLines(
+        majorGridLines: MajorGridLines(
           width: 2,
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.3),
         ),
       ),
     );

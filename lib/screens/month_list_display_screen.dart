@@ -1,5 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:money_console/screens/day_spend_display_screen.dart';
 import 'package:money_console/state/money_state.dart';
 
 import '../viewmodels/calendar_view_model.dart';
@@ -13,8 +16,14 @@ class MonthListDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  late BuildContext _context;
+
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _context = context;
+
     final allMoneyState = ref.watch(allMoneyProvider);
 
     final holidayState = ref.watch(holidayProvider);
@@ -66,6 +75,7 @@ class MonthListDisplayScreen extends ConsumerWidget {
             // makeGraph(data: allMoneyState),
             Expanded(
               child: ListView.separated(
+                controller: _controller,
                 itemBuilder: (context, int position) {
                   int spend = 0;
                   if (position == 0) {
@@ -301,7 +311,17 @@ class MonthListDisplayScreen extends ConsumerWidget {
             style: ElevatedButton.styleFrom(
               primary: Colors.pinkAccent.withOpacity(0.3),
             ),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: _context,
+                builder: (_) {
+                  return DaySpendDisplayScreen(
+                    date: money.date,
+                    spend: spend,
+                  );
+                },
+              );
+            },
             child: const Text('Detail'),
           ),
         ],
