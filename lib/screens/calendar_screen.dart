@@ -13,6 +13,7 @@ import '../viewmodels/calendar_view_model.dart';
 
 import 'month_summary_display_screen.dart';
 import 'month_list_display_screen.dart';
+import 'score_display_screen.dart';
 
 class CalendarScreen extends ConsumerWidget {
   CalendarScreen({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class CalendarScreen extends ConsumerWidget {
           children: [
             SizedBox(
               width: double.infinity,
-              height: 400,
+              height: 300,
               child: CalendarCarousel<Event>(
                 minSelectedDate: DateTime(2020, 1, 1),
                 markedDatesMap: _markedDateMap,
@@ -75,34 +76,58 @@ class CalendarScreen extends ConsumerWidget {
               ),
             ),
             const Divider(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.pinkAccent.withOpacity(0.3),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return MonthListDisplayScreen();
+                    },
+                  );
+                },
+                child: const Text('Month List'),
               ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) {
-                    return MonthListDisplayScreen();
-                  },
-                );
-              },
-              child: const Text('Month List'),
             ),
             const SizedBox(height: 10),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.pinkAccent.withOpacity(0.3),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return MonthSummaryDisplayScreen();
+                    },
+                  );
+                },
+                child: const Text('Month Summary'),
               ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) {
-                    return MonthSummaryDisplayScreen();
-                  },
-                );
-              },
-              child: const Text('Month Summary'),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return ScoreDisplayScreen();
+                    },
+                  );
+                },
+                child: const Text('Score List'),
+              ),
             ),
           ],
         ),

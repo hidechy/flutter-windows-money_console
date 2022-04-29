@@ -4,8 +4,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../models/month_summary.dart';
-import '../models/seiyu_purchase.dart';
+import '../models/month_summary_model.dart';
+import '../models/seiyu_purchase_model.dart';
 
 part 'food_expenses_state.freezed.dart';
 

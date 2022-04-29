@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../models/gold.dart';
+import '../models/gold_model.dart';
 
 import '../viewmodels/gold_view_model.dart';
 import '../viewmodels/holiday_view_model.dart';

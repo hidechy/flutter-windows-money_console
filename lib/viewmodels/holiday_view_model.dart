@@ -13,7 +13,7 @@ final holidayProvider =
 });
 
 class HolidayStateNotifier extends StateNotifier<List<dynamic>> {
-  HolidayStateNotifier(List<dynamic> state) : super([]);
+  HolidayStateNotifier(List<dynamic> state) : super(state);
 
   ///
   void getHolidayData() async {

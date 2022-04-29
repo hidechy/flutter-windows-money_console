@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/month_summary.dart';
+import '../models/month_summary_model.dart';
 
 import 'dart:convert';
 

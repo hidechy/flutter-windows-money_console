@@ -5,7 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../utility/utility.dart';
 import '../viewmodels/holiday_view_model.dart';
 
-import '../models/shintaku.dart';
+import '../models/shintaku_model.dart';
 
 class ShintakuDisplayScreen extends ConsumerWidget {
   ShintakuDisplayScreen({Key? key, required this.record}) : super(key: key);

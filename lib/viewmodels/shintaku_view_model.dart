@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/shintaku.dart';
+import '../models/shintaku_model.dart';
 
 import 'package:http/http.dart';
 

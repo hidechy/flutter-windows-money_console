@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/month_summary.dart';
-import '../models/seiyu_purchase.dart';
+import '../models/month_summary_model.dart';
+import '../models/seiyu_purchase_model.dart';
 
 import '../utility/utility.dart';
 

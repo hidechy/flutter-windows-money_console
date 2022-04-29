@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/gold.dart';
-import '../models/stock.dart';
-import '../models/shintaku.dart';
+import '../models/gold_model.dart';
+import '../models/stock_model.dart';
+import '../models/shintaku_model.dart';
 
 import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/money_view_model.dart';

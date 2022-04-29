@@ -12,37 +12,35 @@ import '../utility/utility.dart';
 
 final moneyProvider = StateNotifierProvider.autoDispose
     .family<MoneyStateNotifier, MoneyState, String>((ref, date) {
-  return MoneyStateNotifier()..getMoneyData(date: date);
+  return MoneyStateNotifier(const MoneyState(
+    date: '',
+    yen_10000: 0,
+    yen_5000: 0,
+    yen_2000: 0,
+    yen_1000: 0,
+    yen_500: 0,
+    yen_100: 0,
+    yen_50: 0,
+    yen_10: 0,
+    yen_5: 0,
+    yen_1: 0,
+    bankA: 0,
+    bankB: 0,
+    bankC: 0,
+    bankD: 0,
+    bankE: 0,
+    peyA: 0,
+    peyB: 0,
+    peyC: 0,
+    peyD: 0,
+    peyE: 0,
+    total: 0,
+  ))
+    ..getMoneyData(date: date);
 });
 
 class MoneyStateNotifier extends StateNotifier<MoneyState> {
-  MoneyStateNotifier()
-      : super(
-          const MoneyState(
-            date: '',
-            yen_10000: 0,
-            yen_5000: 0,
-            yen_2000: 0,
-            yen_1000: 0,
-            yen_500: 0,
-            yen_100: 0,
-            yen_50: 0,
-            yen_10: 0,
-            yen_5: 0,
-            yen_1: 0,
-            bankA: 0,
-            bankB: 0,
-            bankC: 0,
-            bankD: 0,
-            bankE: 0,
-            peyA: 0,
-            peyB: 0,
-            peyC: 0,
-            peyD: 0,
-            peyE: 0,
-            total: 0,
-          ),
-        );
+  MoneyStateNotifier(MoneyState state) : super(state);
 
   ///
   void getMoneyData({required String date}) async {

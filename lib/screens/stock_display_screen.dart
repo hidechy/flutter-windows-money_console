@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../models/stock.dart';
+import '../models/stock_model.dart';
 
 import '../utility/utility.dart';
 

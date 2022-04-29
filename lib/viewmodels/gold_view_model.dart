@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/gold.dart';
+import '../models/gold_model.dart';
 
 import 'package:http/http.dart';
 

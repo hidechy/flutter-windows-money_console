@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/seiyu_purchase.dart';
+import '../models/seiyu_purchase_model.dart';
 
 import 'dart:convert';
 

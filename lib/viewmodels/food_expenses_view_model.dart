@@ -3,8 +3,8 @@
 //
 //
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:money_console/models/month_summary.dart';
-// import 'package:money_console/models/seiyu_purchase.dart';
+// import 'package:money_console/models/month_summary_model.dart';
+// import 'package:money_console/models/seiyu_purchase_model.dart';
 // import 'package:money_console/viewmodels/seiyu_purchase_view_model.dart';
 //
 // import '../request/date_request.dart';

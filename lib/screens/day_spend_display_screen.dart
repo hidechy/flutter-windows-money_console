@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/everyday_spend.dart';
+import '../models/everyday_spend_model.dart';
 
 import '../state/money_state.dart';
 import '../state/spend_item_state.dart';
