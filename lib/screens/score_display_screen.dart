@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../viewmodels/benefit_view_model.dart';
 import '../viewmodels/money_view_model.dart';
@@ -38,7 +39,14 @@ class ScoreDisplayScreen extends ConsumerWidget {
             width: 1,
           ),
         ),
-        child: dispScoreList(data: scoreData),
+        child: Column(
+          children: [
+            makeGraph(data: scoreData),
+            Expanded(
+              child: dispScoreList(data: scoreData),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -244,4 +252,44 @@ class ScoreDisplayScreen extends ConsumerWidget {
       ),
     );
   }
+
+  ///
+  Widget makeGraph({required List<Score> data}) {
+    List<ChartData> _list = [];
+    for (var i = 0; i < data.length - 1; i++) {
+      _list.add(
+        ChartData(
+          x: DateTime.parse('${data[i].yearmonth}-01'),
+          val: data[i].thisTotal,
+        ),
+      );
+    }
+
+    return SfCartesianChart(
+      series: <ChartSeries>[
+        LineSeries<ChartData, DateTime>(
+          color: Colors.yellowAccent,
+          dataSource: _list,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.val,
+        ),
+      ],
+      primaryXAxis: DateTimeAxis(
+        majorGridLines: const MajorGridLines(width: 0),
+      ),
+      primaryYAxis: NumericAxis(
+        majorGridLines: MajorGridLines(
+          width: 2,
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+    );
+  }
+}
+
+class ChartData {
+  final DateTime x;
+  final num val;
+
+  ChartData({required this.x, required this.val});
 }
