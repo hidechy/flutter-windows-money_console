@@ -11,6 +11,7 @@ import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
 
+import 'month_summary_display_screen.dart';
 import 'month_list_display_screen.dart';
 
 class CalendarScreen extends ConsumerWidget {
@@ -88,6 +89,21 @@ class CalendarScreen extends ConsumerWidget {
               },
               child: const Text('Month List'),
             ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return MonthSummaryDisplayScreen();
+                  },
+                );
+              },
+              child: const Text('Month Summary'),
+            ),
           ],
         ),
       ),
@@ -95,7 +111,7 @@ class CalendarScreen extends ConsumerWidget {
   }
 
   ///
-  onDayPressed(DateTime date, List<Event> events) {
+  void onDayPressed(DateTime date, List<Event> events) {
     final calendarSelectDateViewModel =
         _ref.watch(calendarSelectDateProvider.notifier);
     calendarSelectDateViewModel.setCalendarSelectDate(date: date.toString());
@@ -111,7 +127,7 @@ class CalendarScreen extends ConsumerWidget {
   ///
   void makeHolidayMap({required List holiday}) {
     holiday.map((holi) {
-      var exHoli = holi.toString().split('-');
+      final exHoli = holi.toString().split('-');
       _markedDateMap.add(
         DateTime(
             int.parse(exHoli[0]), int.parse(exHoli[1]), int.parse(exHoli[2])),

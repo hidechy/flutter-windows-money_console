@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/screens/shintaku_display_screen.dart';
 
 import '../models/gold.dart';
 import '../models/stock.dart';
@@ -23,6 +22,7 @@ import 'components/money_display_cell.dart';
 import 'money_display_screen.dart';
 import 'stock_display_screen.dart';
 import 'gold_display_screen.dart';
+import 'shintaku_display_screen.dart';
 
 class DetailScreen extends ConsumerWidget {
   DetailScreen({Key? key}) : super(key: key);
@@ -38,7 +38,6 @@ class DetailScreen extends ConsumerWidget {
     _context = context;
 
     var calendarSelectDateState = ref.watch(calendarSelectDateProvider);
-
     if (calendarSelectDateState == "") {
       calendarSelectDateState = DateTime.now().toString();
     }
@@ -304,7 +303,7 @@ class DetailScreen extends ConsumerWidget {
   }
 
   ///
-  getTodayGold({required String date, required List<GoldData> data}) {
+  GoldData? getTodayGold({required String date, required List<GoldData> data}) {
     var goldData;
 
     for (var i = 0; i < data.length; i++) {
@@ -480,7 +479,7 @@ class DetailScreen extends ConsumerWidget {
   }
 
   ///
-  dispShintaku(List<ShintakuRecord> todayShintaku) {
+  Widget dispShintaku(List<ShintakuRecord> todayShintaku) {
     List<Widget> _list = [];
 
     for (var i = 0; i < todayShintaku.length; i++) {

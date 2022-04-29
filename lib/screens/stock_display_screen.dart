@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../models/stock.dart';
 
 import '../utility/utility.dart';
+
 import '../viewmodels/holiday_view_model.dart';
 
 class StockDisplayScreen extends ConsumerWidget {
@@ -150,12 +151,12 @@ class StockDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  makeGraph({required String data}) {
+  Widget makeGraph({required String data}) {
     List<ChartData> _list = [];
 
-    var exData = (data).split('/');
+    final exData = (data).split('/');
     for (var i = (exData.length - 30); i < exData.length; i++) {
-      var exValue = (exData[i]).split('|');
+      final exValue = (exData[i]).split('|');
 
       if (exValue[5] == "-") {
         continue;

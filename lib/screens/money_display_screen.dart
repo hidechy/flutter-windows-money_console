@@ -79,7 +79,7 @@ class MoneyDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  makeGraph({required List<MoneyState> data}) {
+  Widget makeGraph({required List<MoneyState> data}) {
     List<ChartData> _list = [];
     for (var i = 0; i < data.length; i++) {
       final exDate = data[i].date.split('-');

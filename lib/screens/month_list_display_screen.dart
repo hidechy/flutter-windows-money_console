@@ -2,14 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/screens/day_spend_display_screen.dart';
-import 'package:money_console/state/money_state.dart';
 
 import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/money_view_model.dart';
 
 import '../utility/utility.dart';
+
+import 'day_spend_display_screen.dart';
+
+import '../state/money_state.dart';
 
 class MonthListDisplayScreen extends ConsumerWidget {
   MonthListDisplayScreen({Key? key}) : super(key: key);
@@ -42,9 +44,9 @@ class MonthListDisplayScreen extends ConsumerWidget {
       monthMoney = getMonthMoney(ym: ym, data: allMoneyState);
     }
 
-    var lastMonthEnd =
+    final lastMonthEnd =
         DateTime(int.parse(_utility.year), int.parse(_utility.month), 0);
-    var exLastMonthEnd = lastMonthEnd.toString().split(' ');
+    final exLastMonthEnd = lastMonthEnd.toString().split(' ');
 
     final mo = ref.watch(moneyProvider(exLastMonthEnd[0]));
     final kurikoshi = mo.total;
@@ -104,11 +106,12 @@ class MonthListDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  getMonthMoney({required String ym, required List<MoneyState> data}) {
+  List<MoneyState> getMonthMoney(
+      {required String ym, required List<MoneyState> data}) {
     List<MoneyState> _list = [];
 
     for (var i = 0; i < data.length; i++) {
-      var exDate = data[i].date.split('-');
+      final exDate = data[i].date.split('-');
       if (ym == '${exDate[0]}-${exDate[1]}') {
         _list.add(data[i]);
       }

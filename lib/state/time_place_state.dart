@@ -8,5 +8,5 @@ class TimePlaceState with _$TimePlaceState {
     required String time,
     required String place,
     required int price,
-  }) = _TimePlaceItemState;
+  }) = _TimePlaceState;
 }

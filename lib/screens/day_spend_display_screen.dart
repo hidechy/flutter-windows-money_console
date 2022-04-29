@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/state/spend_item_state.dart';
 
 import '../models/everyday_spend.dart';
 
 import '../state/money_state.dart';
+import '../state/spend_item_state.dart';
 
 import '../viewmodels/everyday_spend_view_model.dart';
 import '../viewmodels/holiday_view_model.dart';
@@ -37,15 +37,13 @@ class DaySpendDisplayScreen extends ConsumerWidget {
     final trainState = ref.watch(trainProvider(date));
 
     final everydaySpendState = ref.watch(everydaySpendProvider(date));
-    var todayEverydaySpend =
+    final todayEverydaySpend =
         getTodayEverydaySpend(date: date, data: everydaySpendState);
 
     var step = '';
     var distance = '';
-    if (todayEverydaySpend != null) {
-      step = todayEverydaySpend.step.toString();
-      distance = todayEverydaySpend.distance.toString();
-    }
+    step = todayEverydaySpend.step.toString();
+    distance = todayEverydaySpend.distance.toString();
 
     final holidayState = ref.watch(holidayProvider);
 
@@ -133,23 +131,21 @@ class DaySpendDisplayScreen extends ConsumerWidget {
                   ),
                 )),
                 Expanded(
-                  child: (todayEverydaySpend == null)
-                      ? Container()
-                      : Container(
-                          height: MediaQuery.of(context).size.height - 220,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              left: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
-                                width: 3,
-                              ),
-                            ),
-                          ),
-                          child: dispEverydaySpendList(
-                            data: todayEverydaySpend,
-                          ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height - 220,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          color: Colors.white.withOpacity(0.3),
+                          width: 3,
                         ),
+                      ),
+                    ),
+                    child: dispEverydaySpendList(
+                      data: todayEverydaySpend,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -160,13 +156,13 @@ class DaySpendDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  getTodayEverydaySpend(
+  EverydaySpendData getTodayEverydaySpend(
       {required String date, required List<EverydaySpendData> data}) {
     var everydaySpendData = EverydaySpendData(
         spend: 0, record: '', diff: 0, step: '', distance: '');
 
     for (var i = 0; i < data.length; i++) {
-      var exDate = data[i].date.toString().split(' ');
+      final exDate = data[i].date.toString().split(' ');
       if (date == exDate[0]) {
         everydaySpendData = data[i];
       }
@@ -177,7 +173,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
   final ScrollController _controller = ScrollController();
 
   ///
-  dispMoneyList({required MoneyState data}) {
+  Widget dispMoneyList({required MoneyState data}) {
     return SingleChildScrollView(
       controller: _controller,
       child: Column(
@@ -210,16 +206,16 @@ class DaySpendDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  dispEverydaySpendList({required EverydaySpendData data}) {
+  Widget dispEverydaySpendList({required EverydaySpendData data}) {
     if (data.record.isEmpty) {
       return Container();
     }
 
-    var exRecord = data.record.split('/');
+    final exRecord = data.record.split('/');
 
     List<Widget> _list = [];
     for (var i = 0; i < exRecord.length; i++) {
-      var exRe = exRecord[i].split('|');
+      final exRe = exRecord[i].split('|');
 
       _list.add(
         Container(
@@ -260,7 +256,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  dispSpendItemList(
+  Widget dispSpendItemList(
       {required double height,
       required List<SpendItemState> data,
       required String data2}) {
@@ -293,6 +289,8 @@ class DaySpendDisplayScreen extends ConsumerWidget {
       );
     }
 
+    final ScrollController _controller = ScrollController();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -307,6 +305,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
           ),
           height: height * 0.7,
           child: SingleChildScrollView(
+            controller: _controller,
             child: Column(
               children: _list,
             ),

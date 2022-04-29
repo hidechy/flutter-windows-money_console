@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/shintaku.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../utility/utility.dart';
 import '../viewmodels/holiday_view_model.dart';
+
+import '../models/shintaku.dart';
 
 class ShintakuDisplayScreen extends ConsumerWidget {
   ShintakuDisplayScreen({Key? key, required this.record}) : super(key: key);
@@ -149,12 +150,12 @@ class ShintakuDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  makeGraph({required String data}) {
+  Widget makeGraph({required String data}) {
     List<ChartData> _list = [];
 
-    var exData = (data).split('/');
+    final exData = (data).split('/');
     for (var i = 0; i < exData.length; i++) {
-      var exValue = (exData[i]).split('|');
+      final exValue = (exData[i]).split('|');
 
       if (exValue[5] == "-") {
         continue;

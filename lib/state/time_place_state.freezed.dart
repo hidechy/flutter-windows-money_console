@@ -18,9 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$TimePlaceStateTearOff {
   const _$TimePlaceStateTearOff();
 
-  _TimePlaceItemState call(
+  _TimePlaceState call(
       {required String time, required String place, required int price}) {
-    return _TimePlaceItemState(
+    return _TimePlaceState(
       time: time,
       place: place,
       price: price,
@@ -83,25 +83,25 @@ class _$TimePlaceStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$TimePlaceItemStateCopyWith<$Res>
+abstract class _$TimePlaceStateCopyWith<$Res>
     implements $TimePlaceStateCopyWith<$Res> {
-  factory _$TimePlaceItemStateCopyWith(
-          _TimePlaceItemState value, $Res Function(_TimePlaceItemState) then) =
-      __$TimePlaceItemStateCopyWithImpl<$Res>;
+  factory _$TimePlaceStateCopyWith(
+          _TimePlaceState value, $Res Function(_TimePlaceState) then) =
+      __$TimePlaceStateCopyWithImpl<$Res>;
   @override
   $Res call({String time, String place, int price});
 }
 
 /// @nodoc
-class __$TimePlaceItemStateCopyWithImpl<$Res>
+class __$TimePlaceStateCopyWithImpl<$Res>
     extends _$TimePlaceStateCopyWithImpl<$Res>
-    implements _$TimePlaceItemStateCopyWith<$Res> {
-  __$TimePlaceItemStateCopyWithImpl(
-      _TimePlaceItemState _value, $Res Function(_TimePlaceItemState) _then)
-      : super(_value, (v) => _then(v as _TimePlaceItemState));
+    implements _$TimePlaceStateCopyWith<$Res> {
+  __$TimePlaceStateCopyWithImpl(
+      _TimePlaceState _value, $Res Function(_TimePlaceState) _then)
+      : super(_value, (v) => _then(v as _TimePlaceState));
 
   @override
-  _TimePlaceItemState get _value => super._value as _TimePlaceItemState;
+  _TimePlaceState get _value => super._value as _TimePlaceState;
 
   @override
   $Res call({
@@ -109,7 +109,7 @@ class __$TimePlaceItemStateCopyWithImpl<$Res>
     Object? place = freezed,
     Object? price = freezed,
   }) {
-    return _then(_TimePlaceItemState(
+    return _then(_TimePlaceState(
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -128,8 +128,8 @@ class __$TimePlaceItemStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TimePlaceItemState implements _TimePlaceItemState {
-  const _$_TimePlaceItemState(
+class _$_TimePlaceState implements _TimePlaceState {
+  const _$_TimePlaceState(
       {required this.time, required this.place, required this.price});
 
   @override
@@ -148,7 +148,7 @@ class _$_TimePlaceItemState implements _TimePlaceItemState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TimePlaceItemState &&
+            other is _TimePlaceState &&
             const DeepCollectionEquality().equals(other.time, time) &&
             const DeepCollectionEquality().equals(other.place, place) &&
             const DeepCollectionEquality().equals(other.price, price));
@@ -163,15 +163,15 @@ class _$_TimePlaceItemState implements _TimePlaceItemState {
 
   @JsonKey(ignore: true)
   @override
-  _$TimePlaceItemStateCopyWith<_TimePlaceItemState> get copyWith =>
-      __$TimePlaceItemStateCopyWithImpl<_TimePlaceItemState>(this, _$identity);
+  _$TimePlaceStateCopyWith<_TimePlaceState> get copyWith =>
+      __$TimePlaceStateCopyWithImpl<_TimePlaceState>(this, _$identity);
 }
 
-abstract class _TimePlaceItemState implements TimePlaceState {
-  const factory _TimePlaceItemState(
+abstract class _TimePlaceState implements TimePlaceState {
+  const factory _TimePlaceState(
       {required String time,
       required String place,
-      required int price}) = _$_TimePlaceItemState;
+      required int price}) = _$_TimePlaceState;
 
   @override
   String get time;
@@ -181,6 +181,6 @@ abstract class _TimePlaceItemState implements TimePlaceState {
   int get price;
   @override
   @JsonKey(ignore: true)
-  _$TimePlaceItemStateCopyWith<_TimePlaceItemState> get copyWith =>
+  _$TimePlaceStateCopyWith<_TimePlaceState> get copyWith =>
       throw _privateConstructorUsedError;
 }

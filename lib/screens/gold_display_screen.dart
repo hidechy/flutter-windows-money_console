@@ -142,7 +142,7 @@ class GoldDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  makeGraph({required List<GoldData> data}) {
+  Widget makeGraph({required List<GoldData> data}) {
     List<ChartData> _list = [];
     for (var i = 0; i < data.length; i++) {
       if (data[i].goldValue == "-") {
