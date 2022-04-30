@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../viewmodels/benefit_view_model.dart';
+import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/money_view_model.dart';
 
 import '../entity/benefit_entity.dart';
@@ -12,6 +13,7 @@ import '../entity/score_entity.dart';
 import '../state/money_state.dart';
 
 import '../utility/utility.dart';
+import 'month_summary_display_screen.dart';
 
 class ScoreDisplayScreen extends ConsumerWidget {
   ScoreDisplayScreen({Key? key}) : super(key: key);
@@ -22,9 +24,12 @@ class ScoreDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  late BuildContext _context;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _ref = ref;
+    _context = context;
 
     List<Score> scoreData = getScoreData();
 
@@ -193,55 +198,95 @@ class ScoreDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  dispScoreList({required List<Score> data}) {
+  Widget dispScoreList({required List<Score> data}) {
     List<Widget> _list = [];
 
-    for (var i = 0; i < data.length - 1; i++) {
+    for (var i = 0; i < data.length; i++) {
       _list.add(
-        Row(
-          children: [
-            Expanded(child: Text(data[i].yearmonth)),
-            Expanded(flex: 2, child: Text(data[i].benefitCompany)),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                  _utility.makeCurrencyDisplay(data[i].prevTotal.toString()),
-                  style: const TextStyle(color: Colors.yellowAccent),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 3),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.white.withOpacity(0.3),
+                width: 3,
+              ),
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: Text(data[i].yearmonth)),
+                    Expanded(flex: 2, child: Text(data[i].benefitCompany)),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          _utility.makeCurrencyDisplay(
+                              data[i].prevTotal.toString()),
+                          style: const TextStyle(color: Colors.yellowAccent),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Text(_utility
+                            .makeCurrencyDisplay(data[i].benefit.toString())),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          _utility.makeCurrencyDisplay(
+                              data[i].thisTotal.toString()),
+                          style: const TextStyle(color: Colors.yellowAccent),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Text(_utility
+                            .makeCurrencyDisplay(data[i].minus.toString())),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Text(_utility
+                            .makeCurrencyDisplay(data[i].score.toString())),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                    _utility.makeCurrencyDisplay(data[i].benefit.toString())),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                  _utility.makeCurrencyDisplay(data[i].thisTotal.toString()),
-                  style: const TextStyle(color: Colors.yellowAccent),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
                 ),
+                onPressed: () {
+                  final calendarSelectDateViewModel =
+                      _ref.watch(calendarSelectDateProvider.notifier);
+                  calendarSelectDateViewModel.setCalendarSelectDate(
+                      date: '${data[i].yearmonth}-01');
+
+                  showDialog(
+                    context: _context,
+                    builder: (_) {
+                      return MonthSummaryDisplayScreen();
+                    },
+                  );
+                },
+                child: const Text('Detail'),
               ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                    _utility.makeCurrencyDisplay(data[i].minus.toString())),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                    _utility.makeCurrencyDisplay(data[i].score.toString())),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }
@@ -256,7 +301,7 @@ class ScoreDisplayScreen extends ConsumerWidget {
   ///
   Widget makeGraph({required List<Score> data}) {
     List<ChartData> _list = [];
-    for (var i = 0; i < data.length - 1; i++) {
+    for (var i = 0; i < data.length; i++) {
       _list.add(
         ChartData(
           x: DateTime.parse('${data[i].yearmonth}-01'),

@@ -10,13 +10,17 @@ import 'package:http/http.dart';
 
 final seiyuPurchaseProvider = StateNotifierProvider.autoDispose<
     SeiyuPurchaseStateNotifier, List<SeiyuPurchaseData>>((ref) {
-//  return SeiyuPurchaseStateNotifier([])..getSeiyuPurchaseData(date: date);
   return SeiyuPurchaseStateNotifier([]);
 });
 
 class SeiyuPurchaseStateNotifier
     extends StateNotifier<List<SeiyuPurchaseData>> {
   SeiyuPurchaseStateNotifier(List<SeiyuPurchaseData> state) : super(state);
+
+  ///
+  void init() {
+    state = [];
+  }
 
   ///
   void getSeiyuPurchaseData({required String date}) async {

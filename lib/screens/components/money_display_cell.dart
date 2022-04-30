@@ -54,11 +54,28 @@ class MoneyDisplayCell extends StatelessWidget {
             const SizedBox(height: 5),
             Container(
               alignment: Alignment.topRight,
-              child: Text(price),
+              child: Text(getDispText(text: price)),
             ),
           ],
         ),
       ),
     );
+  }
+
+  ///
+  String getDispText({required String text}) {
+    var exText = text.toString().split('.');
+    var exText2 = text.toString().split('-');
+
+    var flag = 1;
+    if (exText.length > 1) {
+      flag = 0;
+    } else if (exText2.length > 1) {
+      flag = 0;
+    } else if (text == '') {
+      flag = 0;
+    }
+
+    return (flag == 0) ? text : _utility.makeCurrencyDisplay(text);
   }
 }

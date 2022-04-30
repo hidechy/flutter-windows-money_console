@@ -8,12 +8,16 @@ import '../models/seiyu_purchase_model.dart';
 
 import '../utility/utility.dart';
 
+import '../viewmodels/credit_view_model.dart';
 import 'components/blank_screen.dart';
 import 'food_expenses_display_screen.dart';
 
 import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/month_summary_view_model.dart';
 import '../viewmodels/seiyu_purchase_view_model.dart';
+
+import 'credit_display_screen.dart';
+import '../state/credit_detail_state.dart';
 
 // I can not use these.
 /////import '../request/date_request.dart';
@@ -48,6 +52,13 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
 
     final date = '${_utility.year}-${_utility.month}-${_utility.day}';
     _date = date;
+
+    final prevMonth =
+        DateTime(int.parse(_utility.year), int.parse(_utility.month) - 1, 1);
+    final nextMonth =
+        DateTime(int.parse(_utility.year), int.parse(_utility.month) + 1, 1);
+
+    final calendarViewModel = ref.watch(calendarSelectDateProvider.notifier);
     //-------------------
 
     final monthSummaryState = ref.watch(monthSummaryProvider(date));
@@ -55,6 +66,8 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
     _monthSpendSum = monthSpendSum;
 
     final seiyuPurchaseState = ref.watch(seiyuPurchaseProvider);
+
+    final creditState = ref.watch(creditProvider);
 
     // これは未来への課題として残しておく
     // 解決できる日が来るといいね
@@ -86,7 +99,40 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
                 color: Colors.yellowAccent.withOpacity(0.3),
               ),
               width: double.infinity,
-              child: Text(ym),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(ym),
+                  Row(
+                    children: [
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (ym == '2020-01') {
+                            } else {
+                              calendarViewModel.setCalendarSelectDate(
+                                  date: prevMonth.toString());
+                            }
+                          },
+                          child: const Icon(Icons.skip_previous),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () {
+                            calendarViewModel.setCalendarSelectDate(
+                                date: nextMonth.toString());
+                          },
+                          child: const Icon(Icons.skip_next),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Container(
               alignment: Alignment.topRight,
@@ -121,6 +167,7 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
                     child: screenSelector(
                       data: monthSummaryState,
                       data2: seiyuPurchaseState,
+                      data3: creditState,
                     ),
                   ),
                 ),
@@ -194,23 +241,36 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
   Widget getItemIcon({required String item}) {
     switch (item) {
       case "credit":
-        return GestureDetector(
-          onTap: () {},
-          child: const Icon(
-            Icons.credit_card,
-            color: Colors.greenAccent,
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              _ref.watch(seiyuPurchaseProvider.notifier).init();
+
+              final creditViewModel = _ref.watch(creditProvider.notifier);
+              creditViewModel.getCreditData(date: _date);
+            },
+            child: const Icon(
+              Icons.credit_card,
+              color: Colors.greenAccent,
+            ),
           ),
         );
       case "食費":
-        return GestureDetector(
-          onTap: () {
-            final seiyuPurchaseViewModel =
-                _ref.watch(seiyuPurchaseProvider.notifier);
-            seiyuPurchaseViewModel.getSeiyuPurchaseData(date: _date);
-          },
-          child: const Icon(
-            Icons.fastfood,
-            color: Colors.greenAccent,
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              _ref.watch(creditProvider.notifier).init();
+
+              final seiyuPurchaseViewModel =
+                  _ref.watch(seiyuPurchaseProvider.notifier);
+              seiyuPurchaseViewModel.getSeiyuPurchaseData(date: _date);
+            },
+            child: const Icon(
+              Icons.fastfood,
+              color: Colors.greenAccent,
+            ),
           ),
         );
       default:
@@ -222,7 +282,15 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
   ///
   Widget screenSelector(
       {required List<MonthSummaryData> data,
-      required List<SeiyuPurchaseData> data2}) {
+      required List<SeiyuPurchaseData> data2,
+      required CreditDetailState data3}) {
+    final isCreditScreenDisp = (data3.ucCreditData.isNotEmpty ||
+            data3.rakutenCreditData.isNotEmpty ||
+            data3.sumitomoCreditData.isNotEmpty ||
+            data3.amexCreditData.isNotEmpty)
+        ? 1
+        : 0;
+
     if (data2.isNotEmpty) {
       var food = 0;
       var milk = 0;
@@ -287,6 +355,8 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
       };
 
       return FoodExpensesDisplayScreen(foodExpenses: _foodExpenses);
+    } else if (isCreditScreenDisp == 1) {
+      return CreditDisplayScreen();
     } else {
       return const BlankScreen();
     }

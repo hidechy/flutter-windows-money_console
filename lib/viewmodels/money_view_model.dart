@@ -93,6 +93,8 @@ class MoneyStateNotifier extends StateNotifier<MoneyState> {
 
 //////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////
+
 final allMoneyProvider =
     StateNotifierProvider.autoDispose<AllMoneyStateNotifier, List<MoneyState>>(
         (ref) {
