@@ -36,3 +36,22 @@ class SeiyuPurchaseStateNotifier
 }
 
 //////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+final seiyuPurchaseDetailProvider = StateNotifierProvider.autoDispose<
+    SeiyuPurchaseDetailStateNotifier, List<SeiyuPurchaseData>>((ref) {
+  return SeiyuPurchaseDetailStateNotifier([]);
+});
+
+class SeiyuPurchaseDetailStateNotifier
+    extends StateNotifier<List<SeiyuPurchaseData>> {
+  SeiyuPurchaseDetailStateNotifier(List<SeiyuPurchaseData> state)
+      : super(state);
+
+  ///
+  void setSeiyuPurchaseDetailData({required List<SeiyuPurchaseData> data}) {
+    state = data;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////

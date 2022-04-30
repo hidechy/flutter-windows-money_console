@@ -1,7 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:money_console/models/seiyu_purchase_model.dart';
 import 'package:money_console/screens/components/blank_screen.dart';
+import 'package:money_console/screens/seiyu_detail_display_screen.dart';
 
 import '../viewmodels/seiyu_purchase_view_model.dart';
 
@@ -12,10 +15,16 @@ class SeiyuDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  late WidgetRef _ref;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _ref = ref;
+
     final seiyuPurchaseState = ref.watch(seiyuPurchaseProvider);
     final seiyuData = getSeiyuData(data: seiyuPurchaseState);
+
+    final seiyuPurchaseDetailState = ref.watch(seiyuPurchaseDetailProvider);
 
     return AlertDialog(
       backgroundColor: Colors.transparent,
@@ -32,6 +41,21 @@ class SeiyuDisplayScreen extends ConsumerWidget {
           height: 220,
           child: Column(
             children: [
+              Container(
+                margin: const EdgeInsets.only(top: 2, bottom: 30),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.white.withOpacity(0.2),
+                      width: 3,
+                    ),
+                  ),
+                  color: Colors.yellowAccent.withOpacity(0.3),
+                ),
+                width: double.infinity,
+                child: const Text('西友購入履歴'),
+              ),
               Row(
                 children: [
                   Expanded(
@@ -55,7 +79,9 @@ class SeiyuDisplayScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      child: const BlankScreen(),
+                      child: screenSelector(
+                        data: seiyuPurchaseDetailState,
+                      ),
                     ),
                   ),
                 ],
@@ -115,28 +141,39 @@ class SeiyuDisplayScreen extends ConsumerWidget {
     List<Widget> _list = [];
 
     for (var i = 0; i < data.length; i++) {
-      _list.add(Container(
-        margin: const EdgeInsets.symmetric(vertical: 2),
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.white.withOpacity(0.2),
-              width: 3,
-            ),
-          ),
-        ),
-        child: Row(
-          children: [
-            Expanded(child: Text(data[i]['date'])),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                    _utility.makeCurrencyDisplay(data[i]['sum'].toString())),
+      _list.add(MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () {
+            final seiyuPurchaseDetailViewModel =
+                _ref.watch(seiyuPurchaseDetailProvider.notifier);
+            seiyuPurchaseDetailViewModel.setSeiyuPurchaseDetailData(
+                data: data[i]['list']);
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 2),
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.white.withOpacity(0.2),
+                  width: 3,
+                ),
               ),
             ),
-          ],
+            child: Row(
+              children: [
+                Expanded(child: Text(data[i]['date'])),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: Text(_utility
+                        .makeCurrencyDisplay(data[i]['sum'].toString())),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ));
     }
@@ -146,5 +183,14 @@ class SeiyuDisplayScreen extends ConsumerWidget {
         children: _list,
       ),
     );
+  }
+
+  ///
+  Widget screenSelector({required List<SeiyuPurchaseData> data}) {
+    if (data.isNotEmpty) {
+      return const SeiyuDetailDisplayScreen();
+    } else {
+      return const BlankScreen();
+    }
   }
 }

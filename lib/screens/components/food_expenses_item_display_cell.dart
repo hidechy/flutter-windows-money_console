@@ -52,18 +52,21 @@ class FoodExpensesItemDisplayCell extends StatelessWidget {
   Widget getItemIcon({required String item}) {
     switch (item) {
       case '西友':
-        return GestureDetector(
-          onTap: () {
-            showDialog(
-              context: _context,
-              builder: (_) {
-                return SeiyuDisplayScreen();
-              },
-            );
-          },
-          child: const Icon(
-            Icons.call_made,
-            color: Colors.greenAccent,
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              showDialog(
+                context: _context,
+                builder: (_) {
+                  return SeiyuDisplayScreen();
+                },
+              );
+            },
+            child: const Icon(
+              Icons.call_made,
+              color: Colors.greenAccent,
+            ),
           ),
         );
       default:
