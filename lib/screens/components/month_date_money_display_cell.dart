@@ -26,7 +26,7 @@ class MonthDateMoneyDisplayCell extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withOpacity(0.2),
             width: 3,
           ),
         ),

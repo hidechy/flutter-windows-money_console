@@ -40,7 +40,7 @@ class ScoreDisplayScreen extends ConsumerWidget {
         height: MediaQuery.of(context).size.height - 100,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -209,7 +209,7 @@ class ScoreDisplayScreen extends ConsumerWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withOpacity(0.2),
                 width: 3,
               ),
             ),
@@ -325,7 +325,7 @@ class ScoreDisplayScreen extends ConsumerWidget {
       primaryYAxis: NumericAxis(
         majorGridLines: MajorGridLines(
           width: 2,
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withOpacity(0.2),
         ),
       ),
     );

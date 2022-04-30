@@ -58,7 +58,7 @@ class MonthListDisplayScreen extends ConsumerWidget {
         height: MediaQuery.of(context).size.height - 100,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -69,12 +69,22 @@ class MonthListDisplayScreen extends ConsumerWidget {
                 color: Colors.yellowAccent.withOpacity(0.3),
               ),
               padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.only(bottom: 30),
               width: double.infinity,
               child: Text(ym),
             ),
-
-            // makeGraph(data: allMoneyState),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
+                ),
+                onPressed: () {
+                  _controller.jumpTo(_controller.position.maxScrollExtent);
+                },
+                child: const Text('jump'),
+              ),
+            ),
             Expanded(
               child: ListView.separated(
                 controller: _controller,
@@ -94,7 +104,7 @@ class MonthListDisplayScreen extends ConsumerWidget {
                   );
                 },
                 separatorBuilder: (_, __) {
-                  return Divider(color: Colors.white.withOpacity(0.3));
+                  return Divider(color: Colors.white.withOpacity(0.2));
                 },
                 itemCount: monthMoney.length,
               ),

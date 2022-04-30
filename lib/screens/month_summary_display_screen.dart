@@ -80,7 +80,7 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
         height: MediaQuery.of(context).size.height - 100,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -92,7 +92,7 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withOpacity(0.2),
                     width: 3,
                   ),
                 ),
@@ -159,7 +159,7 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                       border: Border(
                         left: BorderSide(
-                          color: Colors.white.withOpacity(0.3),
+                          color: Colors.white.withOpacity(0.2),
                           width: 3,
                         ),
                       ),
@@ -190,7 +190,7 @@ class MonthSummaryDisplayScreen extends ConsumerWidget {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withOpacity(0.2),
               width: 3,
             ),
           ),

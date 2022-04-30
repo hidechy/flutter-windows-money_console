@@ -10,6 +10,7 @@ import '../viewmodels/everyday_spend_view_model.dart';
 import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/money_view_model.dart';
 import '../viewmodels/spend_item_view_model.dart';
+
 //import '../viewmodels/time_place_view_model.dart';
 import '../viewmodels/train_view_model.dart';
 
@@ -54,7 +55,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
         height: MediaQuery.of(context).size.height - 100,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -66,7 +67,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withOpacity(0.2),
                     width: 3,
                   ),
                 ),
@@ -119,7 +120,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     border: Border(
                       left: BorderSide(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withOpacity(0.2),
                         width: 3,
                       ),
                     ),
@@ -137,7 +138,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                       border: Border(
                         left: BorderSide(
-                          color: Colors.white.withOpacity(0.3),
+                          color: Colors.white.withOpacity(0.2),
                           width: 3,
                         ),
                       ),
@@ -224,7 +225,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withOpacity(0.2),
                 width: 3,
               ),
             ),
@@ -269,7 +270,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withOpacity(0.2),
                 width: 3,
               ),
             ),
@@ -298,7 +299,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withOpacity(0.2),
                 width: 3,
               ),
             ),

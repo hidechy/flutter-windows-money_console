@@ -29,7 +29,7 @@ class GoldDisplayScreen extends ConsumerWidget {
         height: MediaQuery.of(context).size.height - 100,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -55,7 +55,7 @@ class GoldDisplayScreen extends ConsumerWidget {
                   );
                 },
                 separatorBuilder: (_, __) {
-                  return Divider(color: Colors.white.withOpacity(0.3));
+                  return Divider(color: Colors.white.withOpacity(0.2));
                 },
                 itemCount: goldState.length,
               ),
@@ -183,7 +183,7 @@ class GoldDisplayScreen extends ConsumerWidget {
       primaryYAxis: NumericAxis(
         majorGridLines: MajorGridLines(
           width: 2,
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withOpacity(0.2),
         ),
       ),
     );

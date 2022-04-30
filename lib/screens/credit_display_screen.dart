@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -93,7 +95,7 @@ class CreditDisplayScreen extends ConsumerWidget {
           ),
           Container(
             alignment: Alignment.topRight,
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(_utility.makeCurrencyDisplay(_total.toString())),
           ),
           Expanded(
@@ -118,7 +120,7 @@ class CreditDisplayScreen extends ConsumerWidget {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withOpacity(0.2),
                       width: 3,
                     ),
                   ),

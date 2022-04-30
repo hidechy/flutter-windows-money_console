@@ -34,6 +34,7 @@ class SeiyuPurchaseData {
     required this.tanka,
     required this.kosuu,
     required this.price,
+    required this.img,
   });
 
   DateTime date;
@@ -42,6 +43,7 @@ class SeiyuPurchaseData {
   String tanka;
   String kosuu;
   String price;
+  String img;
 
   factory SeiyuPurchaseData.fromJson(Map<String, dynamic> json) =>
       SeiyuPurchaseData(
@@ -51,6 +53,7 @@ class SeiyuPurchaseData {
         tanka: json["tanka"],
         kosuu: json["kosuu"],
         price: json["price"],
+        img: json["img"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +64,6 @@ class SeiyuPurchaseData {
         "tanka": tanka,
         "kosuu": kosuu,
         "price": price,
+        "img": img,
       };
 }
