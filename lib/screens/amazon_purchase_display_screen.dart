@@ -1,19 +1,16 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:money_console/models/amazon_purchase_model.dart';
 
+import '../viewmodels/amazon_purchase_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
-import '../viewmodels/year_month_summary_view_model.dart';
-
-import '../state/year_month_summary_state.dart';
 
 import '../utility/utility.dart';
 
 import 'package:uuid/uuid.dart';
 
-class YearMonthSummaryDisplayScreen extends ConsumerWidget {
-  YearMonthSummaryDisplayScreen({Key? key}) : super(key: key);
+class AmazonPurchaseDisplayScreen extends ConsumerWidget {
+  AmazonPurchaseDisplayScreen({Key? key}) : super(key: key);
 
   final Utility _utility = Utility();
 
@@ -28,16 +25,17 @@ class YearMonthSummaryDisplayScreen extends ConsumerWidget {
       calendarSelectDateState = DateTime.now().toString();
     }
 
+    _utility.makeYMDYData(calendarSelectDateState);
+
     final exDate = calendarSelectDateState.split(' ');
     final exYmd = exDate[0].split('-');
-
-    final yearMonthSummaryState =
-        ref.watch(yearMonthSummaryProvider(int.parse(exYmd[0])));
 
     final calendarViewModel = ref.watch(calendarSelectDateProvider.notifier);
 
     final prevYear = '${int.parse(exYmd[0]) - 1}-01-01';
     final nextYear = '${int.parse(exYmd[0]) + 1}-01-01';
+
+    final amazonPurchaseState = ref.watch(amazonPurchaseProvider(exDate[0]));
 
     return AlertDialog(
       backgroundColor: Colors.transparent,
@@ -100,27 +98,8 @@ class YearMonthSummaryDisplayScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 110,
-                  child: Container(),
-                ),
-                for (var i = 1; i <= 12; i++)
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.yellowAccent.withOpacity(0.3),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(i.toString()),
-                    ),
-                  ),
-              ],
-            ),
             Expanded(
-              child: dispYearMonthSummaryList(data: yearMonthSummaryState),
+              child: dispAmazonPurchaseList(data: amazonPurchaseState),
             ),
           ],
         ),
@@ -129,11 +108,25 @@ class YearMonthSummaryDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  Widget dispYearMonthSummaryList({required YearMonthSummaryState data}) {
+  Widget dispAmazonPurchaseList({required List<AmazonPurchaseData> data}) {
     List<Widget> _list = [];
 
-    for (var i = 0; i < data.yearMonthSummaryData.length; i++) {
-      var ymsData = data.yearMonthSummaryData[i];
+    var keepYm = '';
+    for (var i = 0; i < data.length; i++) {
+      var exDate = data[i].date.toString().split(' ');
+      var exYmd = exDate[0].split('-');
+
+      if (keepYm != '${exYmd[0]}-${exYmd[1]}') {
+        _list.add(
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.greenAccent.withOpacity(0.3),
+            ),
+            child: Text('${exYmd[0]}-${exYmd[1]}'),
+          ),
+        );
+      }
 
       _list.add(
         Container(
@@ -149,20 +142,47 @@ class YearMonthSummaryDisplayScreen extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              SizedBox(
-                width: 110,
-                child: Text('${ymsData['midashi']}'),
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(color: Colors.white),
+                child: (data[i].img == '')
+                    ? Image.asset(
+                        'assets/images/no_image.png',
+                        fit: BoxFit.fitHeight,
+                      )
+                    : Image.network(
+                        data[i].img,
+                        fit: BoxFit.fitHeight,
+                      ),
               ),
               Expanded(
-                child: dispKoumokuData(data: ymsData['list']),
+                child: Container(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(data[i].item),
+                      Container(
+                        alignment: Alignment.topRight,
+                        child: Text(exDate[0]),
+                      ),
+                      Container(
+                        alignment: Alignment.topRight,
+                        child:
+                            Text(_utility.makeCurrencyDisplay(data[i].price)),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
         ),
       );
-    }
 
-    _list.add(const SizedBox(height: 500));
+      keepYm = '${exYmd[0]}-${exYmd[1]}';
+    }
 
     return SingleChildScrollView(
       controller: _controller,
@@ -170,35 +190,6 @@ class YearMonthSummaryDisplayScreen extends ConsumerWidget {
       child: Column(
         children: _list,
       ),
-    );
-  }
-
-  ///
-  Widget dispKoumokuData({required data}) {
-    List<Widget> _list = [];
-
-    if (data != null) {
-      for (var i = 0; i < data.length; i++) {
-        _list.add(
-          Expanded(
-            child: Container(
-              alignment: Alignment.topRight,
-              child: (data[i] == 0)
-                  ? Text(
-                      data[i].toString(),
-                      style: TextStyle(color: Colors.white.withOpacity(0.1)),
-                    )
-                  : Text(
-                      _utility.makeCurrencyDisplay(data[i].toString()),
-                    ),
-            ),
-          ),
-        );
-      }
-    }
-
-    return Row(
-      children: _list,
     );
   }
 }

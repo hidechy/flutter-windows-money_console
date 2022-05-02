@@ -9,8 +9,12 @@ import '../models/seiyu_purchase_model.dart';
 
 import 'package:uuid/uuid.dart';
 
-class SeiyuDetailDisplayScreen extends ConsumerWidget {
-  SeiyuDetailDisplayScreen({Key? key}) : super(key: key);
+import '../utility/utility.dart';
+
+class SeiyuPurchaseDetailDisplayScreen extends ConsumerWidget {
+  SeiyuPurchaseDetailDisplayScreen({Key? key}) : super(key: key);
+
+  final Utility _utility = Utility();
 
   final ScrollController controller = ScrollController();
 
@@ -58,9 +62,19 @@ class SeiyuDetailDisplayScreen extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              SizedBox(
+              Container(
                 width: 60,
-                child: Image.network(data[i].img),
+                height: 60,
+                decoration: BoxDecoration(color: Colors.white),
+                child: (data[i].img == '')
+                    ? Image.asset(
+                        'assets/images/no_image.png',
+                        fit: BoxFit.fitHeight,
+                      )
+                    : Image.network(
+                        data[i].img,
+                        fit: BoxFit.fitHeight,
+                      ),
               ),
               Expanded(
                 child: Container(
@@ -78,7 +92,7 @@ class SeiyuDetailDisplayScreen extends ConsumerWidget {
                 children: [
                   Text(data[i].tanka),
                   Text(data[i].kosuu),
-                  Text(data[i].price),
+                  Text(_utility.makeCurrencyDisplay(data[i].price)),
                 ],
               ),
             ],

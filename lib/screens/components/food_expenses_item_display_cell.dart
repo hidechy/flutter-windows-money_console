@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utility/utility.dart';
-import '../seiyu_display_screen.dart';
+import '../seiyu_purchase_display_screen.dart';
 
 class FoodExpensesItemDisplayCell extends StatelessWidget {
   FoodExpensesItemDisplayCell(
@@ -59,7 +59,7 @@ class FoodExpensesItemDisplayCell extends StatelessWidget {
               showDialog(
                 context: _context,
                 builder: (_) {
-                  return SeiyuDisplayScreen();
+                  return SeiyuPurchaseDisplayScreen();
                 },
               );
             },

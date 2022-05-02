@@ -15,6 +15,7 @@ import 'year_month_summary_display_screen.dart';
 import 'month_summary_display_screen.dart';
 import 'month_list_display_screen.dart';
 import 'score_display_screen.dart';
+import 'amazon_purchase_display_screen.dart';
 
 class CalendarScreen extends ConsumerWidget {
   CalendarScreen({Key? key}) : super(key: key);
@@ -127,7 +128,7 @@ class CalendarScreen extends ConsumerWidget {
                     },
                   );
                 },
-                child: const Text('Year Summary'),
+                child: const Text('Year Month Summary'),
               ),
             ),
             const SizedBox(height: 10),
@@ -146,6 +147,24 @@ class CalendarScreen extends ConsumerWidget {
                   );
                 },
                 child: const Text('Score List'),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AmazonPurchaseDisplayScreen();
+                    },
+                  );
+                },
+                child: const Text('Amazon Purchase List'),
               ),
             ),
           ],

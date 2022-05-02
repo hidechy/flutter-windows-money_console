@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:money_console/models/seiyu_purchase_model.dart';
 import 'package:money_console/screens/components/blank_screen.dart';
-import 'package:money_console/screens/seiyu_detail_display_screen.dart';
+import 'package:money_console/screens/seiyu_purchase_detail_display_screen.dart';
 
 import '../viewmodels/seiyu_purchase_view_model.dart';
 
 import '../utility/utility.dart';
 
-class SeiyuDisplayScreen extends ConsumerWidget {
-  SeiyuDisplayScreen({Key? key}) : super(key: key);
+class SeiyuPurchaseDisplayScreen extends ConsumerWidget {
+  SeiyuPurchaseDisplayScreen({Key? key}) : super(key: key);
 
   final Utility _utility = Utility();
 
@@ -142,7 +142,22 @@ class SeiyuDisplayScreen extends ConsumerWidget {
   Widget dispSeiyuList({required List<Map<String, dynamic>> data}) {
     List<Widget> _list = [];
 
+    var keepYm = '';
     for (var i = 0; i < data.length; i++) {
+      var exYmd = data[i]['date'].split('-');
+
+      if (keepYm != '${exYmd[0]}-${exYmd[1]}') {
+        _list.add(
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.greenAccent.withOpacity(0.3),
+            ),
+            child: Text('${exYmd[0]}-${exYmd[1]}'),
+          ),
+        );
+      }
+
       _list.add(MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
@@ -178,6 +193,8 @@ class SeiyuDisplayScreen extends ConsumerWidget {
           ),
         ),
       ));
+
+      keepYm = '${exYmd[0]}-${exYmd[1]}';
     }
 
     return SingleChildScrollView(
@@ -191,7 +208,7 @@ class SeiyuDisplayScreen extends ConsumerWidget {
   ///
   Widget screenSelector({required List<SeiyuPurchaseData> data}) {
     if (data.isNotEmpty) {
-      return SeiyuDetailDisplayScreen();
+      return SeiyuPurchaseDetailDisplayScreen();
     } else {
       return const BlankScreen();
     }
