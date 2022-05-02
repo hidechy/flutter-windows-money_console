@@ -11,6 +11,8 @@ import '../utility/utility.dart';
 
 import '../state/credit_detail_state.dart';
 
+import 'package:uuid/uuid.dart';
+
 class CreditDisplayScreen extends ConsumerWidget {
   CreditDisplayScreen({Key? key}) : super(key: key);
 
@@ -19,6 +21,8 @@ class CreditDisplayScreen extends ConsumerWidget {
   final Utility _utility = Utility();
 
   int _total = 0;
+
+  var uuid = const Uuid();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -110,6 +114,7 @@ class CreditDisplayScreen extends ConsumerWidget {
   ListView dispCreditList({required List<CreditData> data}) {
     return ListView.separated(
       controller: _controller,
+      key: PageStorageKey(uuid.v1()),
       itemBuilder: (context, position) {
         final exDate = data[position].date.toString().split(' ');
         return (data[position].item == '-')

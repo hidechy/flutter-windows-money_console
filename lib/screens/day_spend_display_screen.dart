@@ -27,6 +27,8 @@ class DaySpendDisplayScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final moneyState = ref.watch(moneyProvider(date));
@@ -171,8 +173,6 @@ class DaySpendDisplayScreen extends ConsumerWidget {
     return everydaySpendData;
   }
 
-  final ScrollController _controller = ScrollController();
-
   ///
   Widget dispMoneyList({required MoneyState data}) {
     return SingleChildScrollView(
@@ -246,8 +246,6 @@ class DaySpendDisplayScreen extends ConsumerWidget {
       );
     }
 
-    final ScrollController _controller = ScrollController();
-
     return SingleChildScrollView(
       controller: _controller,
       child: Column(
@@ -289,8 +287,6 @@ class DaySpendDisplayScreen extends ConsumerWidget {
         ),
       );
     }
-
-    final ScrollController _controller = ScrollController();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

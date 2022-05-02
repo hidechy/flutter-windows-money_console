@@ -11,6 +11,7 @@ import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
 
+import 'year_month_summary_display_screen.dart';
 import 'month_summary_display_screen.dart';
 import 'month_list_display_screen.dart';
 import 'score_display_screen.dart';
@@ -109,6 +110,24 @@ class CalendarScreen extends ConsumerWidget {
                   );
                 },
                 child: const Text('Month Summary'),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pinkAccent.withOpacity(0.3),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return YearMonthSummaryDisplayScreen();
+                    },
+                  );
+                },
+                child: const Text('Year Summary'),
               ),
             ),
             const SizedBox(height: 10),

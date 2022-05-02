@@ -1,11 +1,20 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/seiyu_purchase_model.dart';
 
 import '../viewmodels/seiyu_purchase_view_model.dart';
 
+import '../models/seiyu_purchase_model.dart';
+
+import 'package:uuid/uuid.dart';
+
 class SeiyuDetailDisplayScreen extends ConsumerWidget {
-  const SeiyuDetailDisplayScreen({Key? key}) : super(key: key);
+  SeiyuDetailDisplayScreen({Key? key}) : super(key: key);
+
+  final ScrollController controller = ScrollController();
+
+  var uuid = const Uuid();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,13 +22,13 @@ class SeiyuDetailDisplayScreen extends ConsumerWidget {
 
     final exDate = seiyuPurchaseDetailState[0].date.toString().split(' ');
 
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height - 220,
       child: Column(
         children: [
           Container(
             alignment: Alignment.topRight,
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(exDate[0]),
           ),
           Expanded(
@@ -49,13 +58,13 @@ class SeiyuDetailDisplayScreen extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 width: 60,
                 child: Image.network(data[i].img),
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 20),
+                  margin: const EdgeInsets.only(left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -79,6 +88,8 @@ class SeiyuDetailDisplayScreen extends ConsumerWidget {
     }
 
     return SingleChildScrollView(
+      controller: controller,
+      key: PageStorageKey(uuid.v1()),
       child: Column(
         children: _list,
       ),

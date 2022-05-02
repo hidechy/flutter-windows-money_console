@@ -17,6 +17,8 @@ class SeiyuDisplayScreen extends ConsumerWidget {
 
   late WidgetRef _ref;
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _ref = ref;
@@ -179,6 +181,7 @@ class SeiyuDisplayScreen extends ConsumerWidget {
     }
 
     return SingleChildScrollView(
+      controller: _controller,
       child: Column(
         children: _list,
       ),
@@ -188,7 +191,7 @@ class SeiyuDisplayScreen extends ConsumerWidget {
   ///
   Widget screenSelector({required List<SeiyuPurchaseData> data}) {
     if (data.isNotEmpty) {
-      return const SeiyuDetailDisplayScreen();
+      return SeiyuDetailDisplayScreen();
     } else {
       return const BlankScreen();
     }
