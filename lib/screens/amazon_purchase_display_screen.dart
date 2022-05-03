@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:money_console/models/amazon_purchase_model.dart';
@@ -145,7 +147,7 @@ class AmazonPurchaseDisplayScreen extends ConsumerWidget {
               Container(
                 width: 60,
                 height: 60,
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: (data[i].img == '')
                     ? Image.asset(
                         'assets/images/no_image.png',
@@ -158,7 +160,7 @@ class AmazonPurchaseDisplayScreen extends ConsumerWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

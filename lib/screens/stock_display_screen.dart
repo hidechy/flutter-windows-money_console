@@ -83,6 +83,76 @@ class StockDisplayScreen extends ConsumerWidget {
               ),
             ),
             makeGraph(data: record.data),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.3),
+                      ),
+                      onPressed: () {
+                        _controller
+                            .jumpTo(_controller.position.maxScrollExtent);
+                      },
+                      child: const Text('jump'),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.yellowAccent.withOpacity(0.3),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text('num'),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.yellowAccent.withOpacity(0.3),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text('oneStock'),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.yellowAccent.withOpacity(0.3),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text('cost'),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.yellowAccent.withOpacity(0.3),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text('price'),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.yellowAccent.withOpacity(0.3),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text('diff'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: ListView.separated(
                 controller: _controller,

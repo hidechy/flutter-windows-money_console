@@ -6,11 +6,14 @@ import '../utility/utility.dart';
 import '../viewmodels/holiday_view_model.dart';
 
 import '../models/shintaku_model.dart';
+import 'fund_display_screen.dart';
 
 class ShintakuDisplayScreen extends ConsumerWidget {
-  ShintakuDisplayScreen({Key? key, required this.record}) : super(key: key);
+  ShintakuDisplayScreen({Key? key, required this.record, required this.name})
+      : super(key: key);
 
   final ShintakuRecord record;
+  final String name;
 
   final Utility _utility = Utility();
 
@@ -82,6 +85,114 @@ class ShintakuDisplayScreen extends ConsumerWidget {
               ),
             ),
             makeGraph(data: record.data),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    padding: const EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.3),
+                      ),
+                      onPressed: () {
+                        _controller
+                            .jumpTo(_controller.position.maxScrollExtent);
+                      },
+                      child: const Text('jump'),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.yellowAccent.withOpacity(0.3),
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text('num'),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.yellowAccent.withOpacity(0.3),
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text('shutoku'),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.yellowAccent.withOpacity(0.3),
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text('cost'),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.yellowAccent.withOpacity(0.3),
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text('price'),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.yellowAccent.withOpacity(0.3),
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text('diff'),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.yellowAccent.withOpacity(0.3),
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        Container(width: 40),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const Text('kijun'),
+                          ),
+                        ),
+                        Container(
+                          width: 40,
+                          alignment: Alignment.center,
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return FundDisplayScreen(data: exData);
+                                },
+                              );
+                            },
+                            child: const Icon(
+                              Icons.call_made,
+                              color: Colors.greenAccent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Expanded(
               child: ListView.separated(
                 controller: _controller,
@@ -142,6 +253,12 @@ class ShintakuDisplayScreen extends ConsumerWidget {
             child: Container(
               alignment: Alignment.topRight,
               child: Text(exRecord[5]),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: Text(exRecord[6]),
             ),
           ),
         ],

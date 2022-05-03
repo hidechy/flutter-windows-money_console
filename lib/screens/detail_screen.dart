@@ -499,6 +499,7 @@ class DetailScreen extends ConsumerWidget {
                   builder: (_) {
                     return ShintakuDisplayScreen(
                       record: todayShintaku[i],
+                      name: todayShintaku[i].name,
                     );
                   },
                 );

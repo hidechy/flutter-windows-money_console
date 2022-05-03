@@ -65,7 +65,7 @@ class SeiyuPurchaseDetailDisplayScreen extends ConsumerWidget {
               Container(
                 width: 60,
                 height: 60,
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: (data[i].img == '')
                     ? Image.asset(
                         'assets/images/no_image.png',
