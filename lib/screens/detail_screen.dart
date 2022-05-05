@@ -17,6 +17,7 @@ import '../state/money_state.dart';
 
 import '../utility/utility.dart';
 
+import 'bank_display_screen.dart';
 import 'components/money_display_cell.dart';
 
 import 'money_display_screen.dart';
@@ -131,9 +132,28 @@ class DetailScreen extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Divider(),
-        const Text(
-          'E-Money',
-          style: TextStyle(fontSize: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'E-Money',
+              style: TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: _context,
+                  builder: (_) {
+                    return BankDisplayScreen();
+                  },
+                );
+              },
+              child: const Text('Detail'),
+            ),
+          ],
         ),
         const SizedBox(height: 5),
         Row(
@@ -180,9 +200,28 @@ class DetailScreen extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Divider(),
-        const Text(
-          'Bank',
-          style: TextStyle(fontSize: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Bank',
+              style: TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pinkAccent.withOpacity(0.3),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: _context,
+                  builder: (_) {
+                    return BankDisplayScreen();
+                  },
+                );
+              },
+              child: const Text('Detail'),
+            ),
+          ],
         ),
         const SizedBox(height: 5),
         Row(

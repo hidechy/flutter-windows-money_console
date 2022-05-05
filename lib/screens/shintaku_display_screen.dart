@@ -172,18 +172,21 @@ class ShintakuDisplayScreen extends ConsumerWidget {
                         Container(
                           width: 40,
                           alignment: Alignment.center,
-                          child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return FundDisplayScreen(data: exData);
-                                },
-                              );
-                            },
-                            child: const Icon(
-                              Icons.call_made,
-                              color: Colors.greenAccent,
+                          child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return FundDisplayScreen(data: exData);
+                                  },
+                                );
+                              },
+                              child: const Icon(
+                                Icons.call_made,
+                                color: Colors.greenAccent,
+                              ),
                             ),
                           ),
                         ),
