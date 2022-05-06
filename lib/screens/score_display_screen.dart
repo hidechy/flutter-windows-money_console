@@ -201,7 +201,7 @@ class ScoreDisplayScreen extends ConsumerWidget {
   Widget dispScoreList({required List<Score> data}) {
     List<Widget> _list = [];
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length - 1; i++) {
       _list.add(
         Container(
           margin: const EdgeInsets.symmetric(vertical: 2),
@@ -301,7 +301,7 @@ class ScoreDisplayScreen extends ConsumerWidget {
   ///
   Widget makeGraph({required List<Score> data}) {
     List<ChartData> _list = [];
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length - 1; i++) {
       _list.add(
         ChartData(
           x: DateTime.parse('${data[i].yearmonth}-01'),

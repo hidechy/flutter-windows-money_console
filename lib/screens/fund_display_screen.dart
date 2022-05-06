@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+import '../utility/utility.dart';
 import '../viewmodels/fund_view_model.dart';
 
 import '../state/fund_state.dart';
@@ -16,6 +17,8 @@ class FundDisplayScreen extends ConsumerWidget {
   final ScrollController _controller = ScrollController();
 
   var uuid = const Uuid();
+
+  final Utility _utility = Utility();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -164,6 +167,8 @@ class FundDisplayScreen extends ConsumerWidget {
 
     var keepCost = '';
     for (var i = 0; i < data['list'].length; i++) {
+      _utility.makeYMDYData(data['list'][i]['date']);
+
       _list.add(
         Container(
           margin: const EdgeInsets.symmetric(vertical: 2),
@@ -179,10 +184,12 @@ class FundDisplayScreen extends ConsumerWidget {
           child: Row(
             children: [
               Expanded(
+                flex: 2,
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(data['list'][i]['date']),
+                      child: Text(
+                          '${data['list'][i]['date']}（${_utility.youbiStr}）'),
                     ),
                     SizedBox(
                       width: 60,
@@ -226,6 +233,7 @@ class FundDisplayScreen extends ConsumerWidget {
                 ),
               ),
               Expanded(
+                flex: 2,
                 child: Container(
                   padding: const EdgeInsets.only(left: 30),
                   child: Text(data['list'][i]['compareFront']),

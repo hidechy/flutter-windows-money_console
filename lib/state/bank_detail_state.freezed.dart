@@ -19,7 +19,7 @@ class _$BankDetailStateTearOff {
   const _$BankDetailStateTearOff();
 
   _BankDetailState call(
-      {required String bank, required List<BankData> record}) {
+      {required String bank, required AsyncValue<List<BankData>> record}) {
     return _BankDetailState(
       bank: bank,
       record: record,
@@ -33,7 +33,7 @@ const $BankDetailState = _$BankDetailStateTearOff();
 /// @nodoc
 mixin _$BankDetailState {
   String get bank => throw _privateConstructorUsedError;
-  List<BankData> get record => throw _privateConstructorUsedError;
+  AsyncValue<List<BankData>> get record => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BankDetailStateCopyWith<BankDetailState> get copyWith =>
@@ -45,7 +45,7 @@ abstract class $BankDetailStateCopyWith<$Res> {
   factory $BankDetailStateCopyWith(
           BankDetailState value, $Res Function(BankDetailState) then) =
       _$BankDetailStateCopyWithImpl<$Res>;
-  $Res call({String bank, List<BankData> record});
+  $Res call({String bank, AsyncValue<List<BankData>> record});
 }
 
 /// @nodoc
@@ -70,7 +70,7 @@ class _$BankDetailStateCopyWithImpl<$Res>
       record: record == freezed
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
-              as List<BankData>,
+              as AsyncValue<List<BankData>>,
     ));
   }
 }
@@ -82,7 +82,7 @@ abstract class _$BankDetailStateCopyWith<$Res>
           _BankDetailState value, $Res Function(_BankDetailState) then) =
       __$BankDetailStateCopyWithImpl<$Res>;
   @override
-  $Res call({String bank, List<BankData> record});
+  $Res call({String bank, AsyncValue<List<BankData>> record});
 }
 
 /// @nodoc
@@ -109,7 +109,7 @@ class __$BankDetailStateCopyWithImpl<$Res>
       record: record == freezed
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
-              as List<BankData>,
+              as AsyncValue<List<BankData>>,
     ));
   }
 }
@@ -122,7 +122,7 @@ class _$_BankDetailState implements _BankDetailState {
   @override
   final String bank;
   @override
-  final List<BankData> record;
+  final AsyncValue<List<BankData>> record;
 
   @override
   String toString() {
@@ -153,12 +153,12 @@ class _$_BankDetailState implements _BankDetailState {
 abstract class _BankDetailState implements BankDetailState {
   const factory _BankDetailState(
       {required String bank,
-      required List<BankData> record}) = _$_BankDetailState;
+      required AsyncValue<List<BankData>> record}) = _$_BankDetailState;
 
   @override
   String get bank;
   @override
-  List<BankData> get record;
+  AsyncValue<List<BankData>> get record;
   @override
   @JsonKey(ignore: true)
   _$BankDetailStateCopyWith<_BankDetailState> get copyWith =>

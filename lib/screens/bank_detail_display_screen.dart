@@ -64,8 +64,8 @@ class BankDetailDisplayScreen extends ConsumerWidget {
     List<Widget> _list = [];
 
     var keepYm = '';
-    for (var i = 0; i < data.record.length; i++) {
-      var exDate = data.record[i].date.toString().split(' ');
+    for (var i = 0; i < data.record.value!.length; i++) {
+      var exDate = data.record.value![i].date.toString().split(' ');
       var exYmd = exDate[0].split('-');
 
       if (keepYm != '${exYmd[0]}-${exYmd[1]}') {
@@ -101,21 +101,21 @@ class BankDetailDisplayScreen extends ConsumerWidget {
               Expanded(
                 child: Container(
                   alignment: Alignment.topRight,
-                  child:
-                      Text(_utility.makeCurrencyDisplay(data.record[i].price)),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.topRight,
                   child: Text(_utility
-                      .makeCurrencyDisplay(data.record[i].diff.toString())),
+                      .makeCurrencyDisplay(data.record.value![i].price)),
                 ),
               ),
               Expanded(
                 child: Container(
                   alignment: Alignment.topRight,
-                  child: _getUpDownMark(diff: data.record[i].diff),
+                  child: Text(_utility.makeCurrencyDisplay(
+                      data.record.value![i].diff.toString())),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.topRight,
+                  child: _getUpDownMark(diff: data.record.value![i].diff),
                 ),
               ),
             ],

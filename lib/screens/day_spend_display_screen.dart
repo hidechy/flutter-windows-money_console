@@ -28,6 +28,8 @@ class DaySpendDisplayScreen extends ConsumerWidget {
   final Utility _utility = Utility();
 
   final ScrollController _controller = ScrollController();
+  final ScrollController _controller2 = ScrollController();
+  final ScrollController _controller3 = ScrollController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -247,7 +249,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
     }
 
     return SingleChildScrollView(
-      controller: _controller,
+      controller: _controller2,
       child: Column(
         children: _list,
       ),
@@ -302,7 +304,7 @@ class DaySpendDisplayScreen extends ConsumerWidget {
           ),
           height: height * 0.7,
           child: SingleChildScrollView(
-            controller: _controller,
+            controller: _controller3,
             child: Column(
               children: _list,
             ),

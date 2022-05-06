@@ -17,7 +17,7 @@ final bankProvider =
   return BankStateNotifier(
     const BankDetailState(
       bank: '',
-      record: [],
+      record: AsyncValue<List<BankData>>.loading(),
     ),
   );
 });
@@ -51,7 +51,7 @@ class BankStateNotifier extends StateNotifier<BankDetailState> {
 
     state = state.copyWith(
       bank: bank,
-      record: bk.data,
+      record: AsyncValue.data([...bk.data]),
     );
   }
 }

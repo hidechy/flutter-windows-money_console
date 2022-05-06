@@ -186,11 +186,11 @@ class BankDisplayScreen extends ConsumerWidget {
 
   ///
   Widget screenSelector({required BankDetailState data}) {
-    if (data.record.isNotEmpty) {
-      return BankDetailDisplayScreen();
-    } else {
-      return const BlankScreen();
-    }
+    return data.record.when(
+      data: (_) => BankDetailDisplayScreen(),
+      error: (_, __) => BlankScreen(),
+      loading: () => BlankScreen(),
+    );
   }
 
   ///
