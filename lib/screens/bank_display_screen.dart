@@ -1,9 +1,7 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/bank_spend_model.dart';
-import 'package:money_console/screens/bank_spend_display_screen.dart';
 import 'package:uuid/uuid.dart';
 
 import 'components/blank_screen.dart';
@@ -14,6 +12,11 @@ import '../viewmodels/bank_view_model.dart';
 
 import 'bank_detail_display_screen.dart';
 import '../state/bank_detail_state.dart';
+
+import '../models/bank_spend_model.dart';
+import 'bank_spend_display_screen.dart';
+
+import 'bank_diff_display_screen.dart';
 
 class BankDisplayScreen extends ConsumerWidget {
   BankDisplayScreen({Key? key}) : super(key: key);
@@ -35,8 +38,6 @@ class BankDisplayScreen extends ConsumerWidget {
 
   late WidgetRef _ref;
 
-  final ScrollController _controller = ScrollController();
-
   var uuid = const Uuid();
 
   @override
@@ -46,6 +47,11 @@ class BankDisplayScreen extends ConsumerWidget {
     final bankState = ref.watch(bankProvider);
 
     final bankSpendState = ref.watch(bankSpendProvider(bankState.bank));
+
+    List<Map<dynamic, dynamic>> diffData = [];
+    if (bankState.bank != '') {
+      diffData = getBankDiffData(data: bankState, data2: bankSpendState);
+    }
 
     return AlertDialog(
       backgroundColor: Colors.transparent,
@@ -61,7 +67,7 @@ class BankDisplayScreen extends ConsumerWidget {
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 2, bottom: 30),
+              margin: const EdgeInsets.only(top: 2),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 border: Border(
@@ -80,18 +86,19 @@ class BankDisplayScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            Container(
+              child: makeBankList(data: bankList),
+            ),
             Row(
               children: [
                 Expanded(
-                  flex: 1,
                   child: Container(
                     height: MediaQuery.of(context).size.height - 220,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: dispBankList(data: bankList),
+                    child: screenSelector(data: bankState),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
                   child: Container(
                     height: MediaQuery.of(context).size.height - 220,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -103,11 +110,10 @@ class BankDisplayScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    child: screenSelector(data: bankState),
+                    child: screenSelector3(data: diffData),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
                   child: Container(
                     height: MediaQuery.of(context).size.height - 220,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -131,43 +137,34 @@ class BankDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  Widget dispBankList({required List<String> data}) {
+  Widget makeBankList({required List<String> data}) {
     _utility.getBankName();
     final bankNames = _utility.bankNames;
 
+    List<Widget> _list = [];
+    List<Widget> _list2 = [];
+
     final bankState = _ref.watch(bankProvider);
 
-    return ListView.separated(
-      controller: _controller,
-      key: PageStorageKey(uuid.v1()),
-      itemBuilder: (context, position) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MouseRegion(
+    for (var i = 0; i < data.length; i++) {
+      if (RegExp(r'bank').hasMatch(data[i])) {
+        _list.add(
+          Expanded(
+            child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: () {
                   _ref
                       .watch(bankProvider.notifier)
-                      .getBankData(bank: bankList[position]);
+                      .getBankData(bank: bankList[i]);
                 },
                 child: Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(vertical: 2),
+                  alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 3),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.white.withOpacity(0.2),
-                        width: 3,
-                      ),
-                    ),
-                  ),
                   child: Text(
-                    bankNames[bankList[position]]!,
+                    bankNames[data[i]]!,
                     style: TextStyle(
-                      color: (bankList[position] == bankState.bank)
+                      color: (bankList[i] == bankState.bank)
                           ? Colors.yellowAccent
                           : Colors.white,
                     ),
@@ -175,12 +172,51 @@ class BankDisplayScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            if (bankList[position] == 'bankE') const SizedBox(height: 50),
-          ],
+          ),
         );
-      },
-      separatorBuilder: (context, position) => Container(),
-      itemCount: bankList.length,
+      }
+    }
+
+    for (var i = 0; i < data.length; i++) {
+      if (RegExp(r'pay').hasMatch(data[i])) {
+        _list2.add(
+          Expanded(
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  _ref
+                      .watch(bankProvider.notifier)
+                      .getBankData(bank: bankList[i]);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: Text(
+                    bankNames[data[i]]!,
+                    style: TextStyle(
+                      color: (bankList[i] == bankState.bank)
+                          ? Colors.yellowAccent
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    }
+
+    return Column(
+      children: [
+        Row(
+          children: _list,
+        ),
+        Row(
+          children: _list2,
+        ),
+      ],
     );
   }
 
@@ -188,8 +224,8 @@ class BankDisplayScreen extends ConsumerWidget {
   Widget screenSelector({required BankDetailState data}) {
     return data.record.when(
       data: (_) => BankDetailDisplayScreen(),
-      error: (_, __) => BlankScreen(),
-      loading: () => BlankScreen(),
+      error: (_, __) => const BlankScreen(),
+      loading: () => const BlankScreen(),
     );
   }
 
@@ -201,6 +237,99 @@ class BankDisplayScreen extends ConsumerWidget {
       return const BlankScreen();
     } else if (data.isNotEmpty) {
       return BankSpendDisplayScreen();
+    } else {
+      return const BlankScreen();
+    }
+  }
+
+  ///
+  List<Map<dynamic, dynamic>> getBankDiffData(
+      {required BankDetailState data, required List<BankSpendData> data2}) {
+    List<Map<dynamic, dynamic>> _list = [];
+
+    //----------------------------------------------//
+    List<Map<dynamic, dynamic>> _l1 = [];
+
+    List<int> _l2 = [];
+
+    Map<String, String> _m2 = {};
+
+    var keepDate = '';
+
+    bool tesuuryou = false;
+
+    for (var i = 0; i < data2.length; i++) {
+      var exDate = data2[i].date.toString().split(' ');
+
+      if (keepDate != exDate[0]) {
+        _l2 = [];
+
+        tesuuryou = false;
+      }
+
+      _l2.add(int.parse(data2[i].price));
+
+      tesuuryou = (data2[i].item == "手数料") ? true : false;
+
+      if (keepDate != exDate[0]) {
+        Map _m1 = {};
+        _m1['date'] = exDate[0];
+        _m1['tesuuryou'] = tesuuryou;
+        _m1['list'] = _l2;
+
+        _l1.add(_m1);
+      }
+
+      _m2[exDate[0]] = '';
+
+      keepDate = exDate[0];
+    }
+    //----------------------------------------------//
+
+    //----------------------------------------------//
+    Map<String, int> _m6 = {};
+
+    for (var i = 0; i < _l1.length; i++) {
+      var sum = 0;
+      for (var j = 0; j < _l1[i]['list'].length; j++) {
+        sum += int.parse(_l1[i]['list'][j].toString());
+      }
+
+      _m6[_l1[i]['date']] = sum;
+    }
+    //----------------------------------------------//
+
+    for (var i = 0; i < data.record.value!.length; i++) {
+      var exDate = data.record.value![i].date.toString().split(' ');
+      var price = data.record.value![i].diff;
+
+      if (_m6[exDate[0]] != null) {
+        var sum = (price + int.parse(_m6[exDate[0]].toString()));
+        if (sum != 0) {
+          Map<dynamic, dynamic> _m3 = {};
+          _m3['date'] = exDate[0];
+          _m3['price'] = price;
+          _list.add(_m3);
+        }
+      } else {
+        Map<dynamic, dynamic> _m3 = {};
+        _m3['date'] = exDate[0];
+        _m3['price'] = price;
+        _list.add(_m3);
+      }
+    }
+
+    return _list;
+  }
+
+  ///
+  Widget screenSelector3({required List<Map> data}) {
+    final bankState = _ref.watch(bankProvider);
+
+    if (RegExp(r'pay').hasMatch(bankState.bank)) {
+      return const BlankScreen();
+    } else if (data != null) {
+      return BankDiffDisplayScreen(data: data);
     } else {
       return const BlankScreen();
     }

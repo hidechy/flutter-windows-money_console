@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_console/state/fund_detail_state.dart';
+
+import 'fund_detail_state.dart';
 
 part 'fund_state.freezed.dart';
 

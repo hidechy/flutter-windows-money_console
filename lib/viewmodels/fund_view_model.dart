@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/state/fund_detail_state.dart';
+
+import '../state/fund_detail_state.dart';
 
 import '../state/fund_state.dart';
 

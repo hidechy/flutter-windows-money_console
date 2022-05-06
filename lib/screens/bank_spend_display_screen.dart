@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/bank_spend_model.dart';
 import 'package:uuid/uuid.dart';
 
 import '../viewmodels/bank_view_model.dart';
 
 import '../utility/utility.dart';
+
+import '../models/bank_spend_model.dart';
 
 class BankSpendDisplayScreen extends ConsumerWidget {
   BankSpendDisplayScreen({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class BankSpendDisplayScreen extends ConsumerWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(exDate[0]),
+                child: Text(exYmd[exYmd.length - 1]),
               ),
               Expanded(
                 child: Container(

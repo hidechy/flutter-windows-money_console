@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/seiyu_purchase_model.dart';
-import 'package:money_console/screens/components/blank_screen.dart';
-import 'package:money_console/screens/seiyu_purchase_detail_display_screen.dart';
+
+import '../models/seiyu_purchase_model.dart';
+import 'components/blank_screen.dart';
+import 'seiyu_purchase_detail_display_screen.dart';
 
 import '../viewmodels/seiyu_purchase_view_model.dart';
 

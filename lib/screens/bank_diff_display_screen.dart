@@ -2,27 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
-import '../viewmodels/bank_view_model.dart';
+import 'package:uuid/uuid.dart';
 
 import '../utility/utility.dart';
 
-import '../state/bank_detail_state.dart';
+class BankDiffDisplayScreen extends ConsumerWidget {
+  BankDiffDisplayScreen({Key? key, required this.data}) : super(key: key);
 
-class BankDetailDisplayScreen extends ConsumerWidget {
-  BankDetailDisplayScreen({Key? key}) : super(key: key);
+  final List<Map<dynamic, dynamic>> data;
+
+  final Utility _utility = Utility();
 
   final ScrollController _controller = ScrollController();
 
   var uuid = const Uuid();
 
-  final Utility _utility = Utility();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bankState = ref.watch(bankProvider);
-
     return Column(
       children: [
         Container(
@@ -38,36 +35,18 @@ class BankDetailDisplayScreen extends ConsumerWidget {
             child: const Text('jump'),
           ),
         ),
-        Expanded(
-          child: dispBankDetailList(data: bankState),
-        ),
+        Expanded(child: dispBankDiffList()),
       ],
     );
   }
 
   ///
-  Widget _getUpDownMark({required int diff}) {
-    if (diff > 0) {
-      return const Icon(
-        Icons.arrow_upward,
-        color: Colors.greenAccent,
-      );
-    } else {
-      return const Icon(
-        Icons.arrow_downward,
-        color: Colors.redAccent,
-      );
-    }
-  }
-
-  ///
-  Widget dispBankDetailList({required BankDetailState data}) {
+  Widget dispBankDiffList() {
     List<Widget> _list = [];
 
     var keepYm = '';
-    for (var i = 0; i < data.record.value!.length; i++) {
-      var exDate = data.record.value![i].date.toString().split(' ');
-      var exYmd = exDate[0].split('-');
+    for (var i = 0; i < data.length; i++) {
+      var exYmd = data[i]['date'].split('-');
 
       if (keepYm != '${exYmd[0]}-${exYmd[1]}') {
         _list.add(
@@ -95,6 +74,7 @@ class BankDetailDisplayScreen extends ConsumerWidget {
             ),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Text(exYmd[exYmd.length - 1]),
@@ -103,20 +83,7 @@ class BankDetailDisplayScreen extends ConsumerWidget {
                 child: Container(
                   alignment: Alignment.topRight,
                   child: Text(_utility
-                      .makeCurrencyDisplay(data.record.value![i].price)),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.topRight,
-                  child: Text(_utility.makeCurrencyDisplay(
-                      data.record.value![i].diff.toString())),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.topRight,
-                  child: _getUpDownMark(diff: data.record.value![i].diff),
+                      .makeCurrencyDisplay(data[i]['price'].toString())),
                 ),
               ),
             ],

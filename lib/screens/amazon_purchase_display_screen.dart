@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:money_console/models/amazon_purchase_model.dart';
+
+import '../models/amazon_purchase_model.dart';
 
 import '../viewmodels/amazon_purchase_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
