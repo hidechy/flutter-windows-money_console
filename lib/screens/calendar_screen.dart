@@ -8,14 +8,14 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 
-import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
+import '../viewmodels/holiday_view_model.dart';
 
-import 'year_month_summary_display_screen.dart';
-import 'month_summary_display_screen.dart';
-import 'month_list_display_screen.dart';
-import 'score_display_screen.dart';
 import 'amazon_purchase_display_screen.dart';
+import 'month_list_display_screen.dart';
+import 'month_summary_display_screen.dart';
+import 'score_display_screen.dart';
+import 'year_month_summary_display_screen.dart';
 
 class CalendarScreen extends ConsumerWidget {
   CalendarScreen({Key? key}) : super(key: key);

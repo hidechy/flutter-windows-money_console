@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../entity/benefit_entity.dart';
+import '../entity/score_entity.dart';
+
+import '../state/money_state.dart';
+
+import '../utility/utility.dart';
+
 import '../viewmodels/benefit_view_model.dart';
 import '../viewmodels/calendar_view_model.dart';
 import '../viewmodels/money_view_model.dart';
 
-import '../entity/benefit_entity.dart';
-import '../entity/score_entity.dart';
-import '../state/money_state.dart';
-
-import '../utility/utility.dart';
 import 'month_summary_display_screen.dart';
 
 class ScoreDisplayScreen extends ConsumerWidget {

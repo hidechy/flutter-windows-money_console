@@ -6,15 +6,13 @@ import '../models/everyday_spend_model.dart';
 import '../state/money_state.dart';
 import '../state/spend_item_state.dart';
 
+import '../utility/utility.dart';
+
 import '../viewmodels/everyday_spend_view_model.dart';
 import '../viewmodels/holiday_view_model.dart';
 import '../viewmodels/money_view_model.dart';
 import '../viewmodels/spend_item_view_model.dart';
-
-//import '../viewmodels/time_place_view_model.dart';
 import '../viewmodels/train_view_model.dart';
-
-import '../utility/utility.dart';
 
 import 'components/month_date_money_display_cell.dart';
 

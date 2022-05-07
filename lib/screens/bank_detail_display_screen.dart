@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import '../viewmodels/bank_view_model.dart';
+import '../state/bank_detail_state.dart';
 
 import '../utility/utility.dart';
 
-import '../state/bank_detail_state.dart';
+import '../viewmodels/bank_view_model.dart';
 
 class BankDetailDisplayScreen extends ConsumerWidget {
   BankDetailDisplayScreen({Key? key}) : super(key: key);

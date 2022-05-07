@@ -4,10 +4,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../state/money_state.dart';
 
-import '../viewmodels/money_view_model.dart';
-import '../viewmodels/holiday_view_model.dart';
-
 import '../utility/utility.dart';
+
+import '../viewmodels/holiday_view_model.dart';
+import '../viewmodels/money_view_model.dart';
 
 class MoneyDisplayScreen extends ConsumerWidget {
   MoneyDisplayScreen({Key? key}) : super(key: key);

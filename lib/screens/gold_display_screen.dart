@@ -4,10 +4,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/gold_model.dart';
 
+import '../utility/utility.dart';
+
 import '../viewmodels/gold_view_model.dart';
 import '../viewmodels/holiday_view_model.dart';
-
-import '../utility/utility.dart';
 
 class GoldDisplayScreen extends ConsumerWidget {
   GoldDisplayScreen({Key? key}) : super(key: key);

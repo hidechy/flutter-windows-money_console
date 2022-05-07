@@ -2,21 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:money_console/entity/benefit_entity.dart';
 import 'package:uuid/uuid.dart';
 
-import 'components/blank_screen.dart';
+import '../models/bank_spend_model.dart';
+
+import '../state/bank_detail_state.dart';
 
 import '../utility/utility.dart';
 
 import '../viewmodels/bank_view_model.dart';
+import '../viewmodels/benefit_view_model.dart';
 
 import 'bank_detail_display_screen.dart';
-import '../state/bank_detail_state.dart';
-
-import '../models/bank_spend_model.dart';
 import 'bank_spend_display_screen.dart';
+import 'benefit_display_screen.dart';
 
-import 'bank_diff_display_screen.dart';
+import 'components/blank_screen.dart';
 
 class BankDisplayScreen extends ConsumerWidget {
   BankDisplayScreen({Key? key}) : super(key: key);
@@ -48,9 +50,15 @@ class BankDisplayScreen extends ConsumerWidget {
 
     final bankSpendState = ref.watch(bankSpendProvider(bankState.bank));
 
+    final benefitState = ref.watch(benefitProvider);
+
     List<Map<dynamic, dynamic>> diffData = [];
     if (bankState.bank != '') {
-      diffData = getBankDiffData(data: bankState, data2: bankSpendState);
+      diffData = getBankDiffData(
+        data: bankState,
+        data2: bankSpendState,
+        data3: benefitState,
+      );
     }
 
     return AlertDialog(
@@ -110,7 +118,11 @@ class BankDisplayScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    child: screenSelector3(data: diffData),
+                    child: screenSelector2(
+                      data: bankSpendState,
+                      data2: diffData,
+                      height: MediaQuery.of(context).size.height - 220,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -125,7 +137,7 @@ class BankDisplayScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    child: screenSelector2(data: bankSpendState),
+                    child: screenSelector3(),
                   ),
                 ),
               ],
@@ -230,13 +242,19 @@ class BankDisplayScreen extends ConsumerWidget {
   }
 
   ///
-  Widget screenSelector2({required List<BankSpendData> data}) {
+  Widget screenSelector2(
+      {required List<BankSpendData> data,
+      required List<Map> data2,
+      required double height}) {
     final bankState = _ref.watch(bankProvider);
 
     if (RegExp(r'pay').hasMatch(bankState.bank)) {
       return const BlankScreen();
     } else if (data.isNotEmpty) {
-      return BankSpendDisplayScreen();
+      return BankSpendDisplayScreen(
+        diffData: data2,
+        height: height,
+      );
     } else {
       return const BlankScreen();
     }
@@ -244,7 +262,9 @@ class BankDisplayScreen extends ConsumerWidget {
 
   ///
   List<Map<dynamic, dynamic>> getBankDiffData(
-      {required BankDetailState data, required List<BankSpendData> data2}) {
+      {required BankDetailState data,
+      required List<BankSpendData> data2,
+      required List<Benefit> data3}) {
     List<Map<dynamic, dynamic>> _list = [];
 
     //----------------------------------------------//
@@ -299,6 +319,9 @@ class BankDisplayScreen extends ConsumerWidget {
     }
     //----------------------------------------------//
 
+    //----------------------------------------------//
+    List<Map<dynamic, dynamic>> _l7 = [];
+
     for (var i = 0; i < data.record.value!.length; i++) {
       var exDate = data.record.value![i].date.toString().split(' ');
       var price = data.record.value![i].diff;
@@ -309,27 +332,41 @@ class BankDisplayScreen extends ConsumerWidget {
           Map<dynamic, dynamic> _m3 = {};
           _m3['date'] = exDate[0];
           _m3['price'] = price;
-          _list.add(_m3);
+          _l7.add(_m3);
         }
       } else {
         Map<dynamic, dynamic> _m3 = {};
         _m3['date'] = exDate[0];
         _m3['price'] = price;
-        _list.add(_m3);
+        _l7.add(_m3);
       }
     }
+    //----------------------------------------------//
+
+    //----------------------------------------------//
+    for (var i = 0; i < _l7.length; i++) {
+      for (var j = 0; j < data3.length; j++) {
+        if (_l7[i]['date'] == data3[j].date) {
+          var diff = (int.parse(_l7[i]['price'].toString()) -
+              int.parse(data3[j].price.toString()));
+
+          if (diff != 0) {
+            _list.add(_l7[i]);
+          }
+        }
+      }
+    }
+    //----------------------------------------------//
 
     return _list;
   }
 
   ///
-  Widget screenSelector3({required List<Map> data}) {
+  Widget screenSelector3() {
     final bankState = _ref.watch(bankProvider);
 
-    if (RegExp(r'pay').hasMatch(bankState.bank)) {
-      return const BlankScreen();
-    } else if (data != null) {
-      return BankDiffDisplayScreen(data: data);
+    if (bankState.bank == "bankD") {
+      return BenefitDisplayScreen();
     } else {
       return const BlankScreen();
     }

@@ -4,26 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/gold_model.dart';
-import '../models/stock_model.dart';
 import '../models/shintaku_model.dart';
-
-import '../viewmodels/calendar_view_model.dart';
-import '../viewmodels/money_view_model.dart';
-import '../viewmodels/gold_view_model.dart';
-import '../viewmodels/stock_view_model.dart';
-import '../viewmodels/shintaku_view_model.dart';
+import '../models/stock_model.dart';
 
 import '../state/money_state.dart';
 
 import '../utility/utility.dart';
 
-import 'bank_display_screen.dart';
-import 'components/money_display_cell.dart';
+import '../viewmodels/calendar_view_model.dart';
+import '../viewmodels/gold_view_model.dart';
+import '../viewmodels/money_view_model.dart';
+import '../viewmodels/shintaku_view_model.dart';
+import '../viewmodels/stock_view_model.dart';
 
-import 'money_display_screen.dart';
-import 'stock_display_screen.dart';
+import 'bank_display_screen.dart';
 import 'gold_display_screen.dart';
+import 'money_display_screen.dart';
 import 'shintaku_display_screen.dart';
+import 'stock_display_screen.dart';
+
+import 'components/money_display_cell.dart';
 
 class DetailScreen extends ConsumerWidget {
   DetailScreen({Key? key}) : super(key: key);

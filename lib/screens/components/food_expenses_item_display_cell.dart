@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utility/utility.dart';
+
 import '../seiyu_purchase_display_screen.dart';
 
 class FoodExpensesItemDisplayCell extends StatelessWidget {

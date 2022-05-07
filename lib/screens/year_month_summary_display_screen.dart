@@ -2,15 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../viewmodels/calendar_view_model.dart';
-import '../viewmodels/year_month_summary_view_model.dart';
+import 'package:uuid/uuid.dart';
 
 import '../state/year_month_summary_state.dart';
 
 import '../utility/utility.dart';
 
-import 'package:uuid/uuid.dart';
+import '../viewmodels/calendar_view_model.dart';
+import '../viewmodels/year_month_summary_view_model.dart';
 
 class YearMonthSummaryDisplayScreen extends ConsumerWidget {
   YearMonthSummaryDisplayScreen({Key? key}) : super(key: key);

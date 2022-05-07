@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../models/shintaku_model.dart';
+
 import '../utility/utility.dart';
+
 import '../viewmodels/holiday_view_model.dart';
 
-import '../models/shintaku_model.dart';
 import 'fund_display_screen.dart';
 
 class ShintakuDisplayScreen extends ConsumerWidget {

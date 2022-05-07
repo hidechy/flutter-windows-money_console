@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/seiyu_purchase_model.dart';
-import 'components/blank_screen.dart';
-import 'seiyu_purchase_detail_display_screen.dart';
+
+import '../utility/utility.dart';
 
 import '../viewmodels/seiyu_purchase_view_model.dart';
 
-import '../utility/utility.dart';
+import 'seiyu_purchase_detail_display_screen.dart';
+
+import 'components/blank_screen.dart';
 
 class SeiyuPurchaseDisplayScreen extends ConsumerWidget {
   SeiyuPurchaseDisplayScreen({Key? key}) : super(key: key);

@@ -2,16 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/credit_model.dart';
-import '../viewmodels/calendar_view_model.dart';
-import '../viewmodels/credit_view_model.dart';
-
-import '../utility/utility.dart';
 
 import '../state/credit_detail_state.dart';
 
-import 'package:uuid/uuid.dart';
+import '../utility/utility.dart';
+
+import '../viewmodels/calendar_view_model.dart';
+import '../viewmodels/credit_view_model.dart';
 
 class CreditDisplayScreen extends ConsumerWidget {
   CreditDisplayScreen({Key? key}) : super(key: key);

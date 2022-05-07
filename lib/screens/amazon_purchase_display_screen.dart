@@ -2,15 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/amazon_purchase_model.dart';
 
-import '../viewmodels/amazon_purchase_view_model.dart';
-import '../viewmodels/calendar_view_model.dart';
-
 import '../utility/utility.dart';
 
-import 'package:uuid/uuid.dart';
+import '../viewmodels/amazon_purchase_view_model.dart';
+import '../viewmodels/calendar_view_model.dart';
 
 class AmazonPurchaseDisplayScreen extends ConsumerWidget {
   AmazonPurchaseDisplayScreen({Key? key}) : super(key: key);
